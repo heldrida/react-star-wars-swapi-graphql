@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Navigation = styled.nav`
-  background: grey;
-  color: #333;
+  background: ${(props) => props.theme.foregroundColor};
+  height: auto;
 `
 
 const NavigationList = styled.ul`
-  border-bottom: 1px solid #333;
+  line-height: 4rem;
 `
 
 const NavigationItem = styled.li`
@@ -16,6 +16,19 @@ const NavigationItem = styled.li`
   padding-left: 0;
   display: inline-block;
   margin-right: 2rem;
+  color: white;
+
+  & > a {
+    color: ${(props) => props.theme.textLight};
+    text-decoration: none;
+    font-family: "Fredoka One", sans-serif;
+    transition: opacity .2s;
+    opacity: 1;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 `
 
 const NavigationBar = () => (
