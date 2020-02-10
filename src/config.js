@@ -32,5 +32,7 @@ export default {
   // Obs: If you are not running the API through the Docker container documented
   // in the README.md, use the alternative proxy's provided
   graphqlEndpoint: process.env.NODE_ENV === 'development' ? "http://localhost:8080" : "https://swapi.apis.guru",
-  themeColors
+  themeColors,
+  // Select number of players optional values, set as comma separated values
+  selectableNumberOfPlayersCsv: "2, 3, 4, 5, 6"
 }
