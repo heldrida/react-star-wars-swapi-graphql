@@ -4,11 +4,11 @@ import { NavigationBar } from './Components'
 import { Home, Results } from './Containers'
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import appConfig from './config'
-import { TPropsTheme } from './Types'
+import { TPropsTheme, TThemeConf } from './Types'
 import { BoxWrapper } from './Components'
 
 // [TODO]: Use env var to toggle between default and dark theme on build as bonus requirement
-const themeConf = {
+const themeConf: TThemeConf = {
   color0: appConfig.themeColors.default.schaussPink,
   color1: appConfig.themeColors.default.cottonCandy,
   color2: appConfig.themeColors.default.pinkPearl,

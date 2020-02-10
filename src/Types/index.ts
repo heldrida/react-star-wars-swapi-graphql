@@ -23,10 +23,12 @@ interface IStarships {
   __typename?: string
 }
 
+type TThemeConf = {
+  [name: string]: string
+}
+
 type TPropsTheme = {
-  theme: {
-    [name: string]: string;
-  };
+  theme: TThemeConf
 };
 
 export {
@@ -34,5 +36,6 @@ export {
   TPlayerCardType,
   TPropsTheme,
   IPerson,
-  IStarships
+  IStarships,
+  TThemeConf
 }
