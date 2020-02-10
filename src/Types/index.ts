@@ -6,7 +6,26 @@ type TPlayerNames = {
 
 type TPlayerCardType = string
 
+interface IPerson {
+  id: string
+  name: string
+  birthYear: string
+  gender: string
+  height: number
+  __typename?: string
+}
+
+interface IStarships {
+  id: string
+  name: string
+  model: string
+  length: number
+  __typename?: string
+}
+
 export {
   TPlayerNames,
-  TPlayerCardType
+  TPlayerCardType,
+  IPerson,
+  IStarships
 }
