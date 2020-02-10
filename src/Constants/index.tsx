@@ -1,11 +1,13 @@
-const APP_NAME = "nsPunkbitStarWarsTopTrumps"
+enum APPLICATION {
+  name = "nsPunkbitStarWarsTopTrumps"
+}
 
 enum PLAYER_CARD_TYPE {
-  PEOPLE = "people",
-  STARSHIPS = "starships"
+  people = "people",
+  starships = "starships"
 }
 
 export {
-  APP_NAME,
+  APPLICATION,
   PLAYER_CARD_TYPE
 }
