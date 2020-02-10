@@ -31,11 +31,14 @@ type TPropsTheme = {
   theme: TThemeConf
 };
 
+type TSelectOnChangeCallback = (e: React.ChangeEvent<HTMLSelectElement>) => void
+
 export {
   TPlayerNames,
   TPlayerCardType,
   TPropsTheme,
   IPerson,
   IStarships,
-  TThemeConf
+  TThemeConf,
+  TSelectOnChangeCallback
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import NumberOfPlayerSelection from './index'
-import { render, fireEvent, waitForElement } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import AppConfiguration from '../../config'
 import { configurationCsvToArr } from '../../Helpers'
 

@@ -1,9 +1,10 @@
 import React from 'react'
 import AppConfiguration from '../../config'
 import { configurationCsvToArr } from '../../Helpers'
+import { TSelectOnChangeCallback } from '../../Types'
 
 interface INumberOfPlayerSelectProps {
-  onChangeHandler: () => void
+  onChangeHandler: TSelectOnChangeCallback
   numberOfPlayers: number
 }
 
