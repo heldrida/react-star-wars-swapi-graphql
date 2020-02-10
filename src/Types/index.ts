@@ -23,9 +23,16 @@ interface IStarships {
   __typename?: string
 }
 
+type TPropsTheme = {
+  theme: {
+    [name: string]: string;
+  };
+};
+
 export {
   TPlayerNames,
   TPlayerCardType,
+  TPropsTheme,
   IPerson,
   IStarships
 }
