@@ -57,3 +57,10 @@ To Build:
 
 ### `yarn build`
 
+For development:
+
+## yarn watch
+
+This uses a watcher that checks for any changes in the .test.tsx files and runs the tests.
+Change it accordingly. Although, [TODO] a pre-commit hook will be added later on to run tests.
+
