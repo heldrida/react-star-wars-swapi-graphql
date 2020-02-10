@@ -1,5 +1,7 @@
 import React from 'react'
 
-const Results = () => (<p>{'Hello world <Results />!'}</p>)
+const Results = () => (
+  <p>{'Hello world <Resultsss />!'}</p>
+)
 
 export default Results

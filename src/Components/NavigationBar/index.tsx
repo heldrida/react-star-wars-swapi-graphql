@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import BoxWrapper from '../BoxWrapper'
 
 const Navigation = styled.nav`
   background: ${(props) => props.theme.foregroundColor};
@@ -11,8 +12,8 @@ const Navigation = styled.nav`
 
 const NavigationList = styled.ul`
   line-height: 4rem;
-  max-width: 1024px;
   margin: 0 auto;
+  padding: 0;
 `
 
 const NavigationItem = styled.li`
@@ -40,14 +41,16 @@ const NavigationItem = styled.li`
 const NavigationBar = () => (
   <nav>
     <Navigation>
-      <NavigationList>
-        <NavigationItem>
-          <Link to="/">Home</Link>
-        </NavigationItem>
-        <NavigationItem>
-          <Link to="/results">Results</Link>
-        </NavigationItem>
-      </NavigationList>
+      <BoxWrapper>
+        <NavigationList>
+          <NavigationItem>
+            <Link to="/">Home</Link>
+          </NavigationItem>
+          <NavigationItem>
+            <Link to="/results">Results</Link>
+          </NavigationItem>
+        </NavigationList>
+      </BoxWrapper>
     </Navigation>
   </nav>
 )

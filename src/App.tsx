@@ -5,6 +5,7 @@ import { Home, Results } from './Containers'
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import appConfig from './config'
 import { TPropsTheme } from './Types'
+import { BoxWrapper } from './Components'
 
 // [TODO]: Use env var to toggle between default and dark theme on build as bonus requirement
 const themeConf = {
@@ -42,8 +43,16 @@ const App = () => {
       <Router>
         <NavigationBar />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/results" component={Results} />
+          <Route exact path="/">
+            <BoxWrapper>
+              <Home />
+            </BoxWrapper>
+          </Route>
+          <Route exact path="/results">
+            <BoxWrapper>
+              <Results />
+            </BoxWrapper>
+          </Route>
         </Switch>
       </Router>
     </ThemeProvider>
