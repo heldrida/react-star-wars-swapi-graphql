@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NumberOfPlayerSelect } from '../../Components'
 import AppConfiguration from '../../config'
 import { TSelectOnChangeCallback } from '../../Types'
 
-const Home = () => {
+const UserOptionsMenu = () => {
   const initialUserInputOptionsState = {
     playerType: '',
     playerNames: {},
@@ -22,9 +22,23 @@ const Home = () => {
     setUserInputOptions(data)
   }
 
+  useEffect(() => {
+    console.log('[debug] <UserOptionsMenu>: userInputOptions: ', userInputOptions)
+  }, [userInputOptions])
+
+  useEffect(() => {
+    console.log('[debug] <UserOptionsMenu>: numberOfPlayers: ', numberOfPlayers)
+  }, [numberOfPlayers])
+
   return (
     <NumberOfPlayerSelect onChangeHandler={onChangeHandlerNumberOfPlayerSelect} numberOfPlayers={numberOfPlayers} />
-  )
+  )  
 }
+
+const Home = () => (
+  <>
+    <UserOptionsMenu />
+  </>
+)
 
 export default Home
