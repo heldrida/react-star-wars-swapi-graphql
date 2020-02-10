@@ -78,7 +78,6 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "watch": "npx onchange src/**/*.test.tsx -- yarn test",
     "api": "node api"
   },
   "eslintConfig": {
@@ -157,7 +156,6 @@
     "apollo-boost": "^0.4.7",
     "apollo-link-http": "^1.5.16",
     "graphql": "^14.6.0",
-    "onchange": "^6.1.0",
     "styled-components": "^5.0.1"
   }
 }
