@@ -1,14 +1,15 @@
 import React, { useEffect, useReducer } from 'react'
 import AppConfiguration from '../../config'
-import { NumberOfPlayerSelect, PlayerModeSelect } from '../../Components'
-import { TSelectOnChangeCallback } from '../../Types'
+import { NumberOfPlayerSelect, PlayerModeSelect, PlayerNameSetter } from '../../Components'
+import { TSelectOnChangeCallback, TInputOnChangeCallback } from '../../Types'
 import { ACTIONS } from '../../Constants'
 import {
   IStateUserOptions,
   IReducerUserOptions,
   IAction,
   ISetNumberOfPlayers,
-  ISetPlayerMode } from '../../Types'
+  ISetPlayerMode,
+  ISetPlayerName } from '../../Types'
   import { PLAYER_CARD_TYPE } from '../../Constants' 
 
 // type guard
@@ -18,6 +19,10 @@ const isSetNumberOfPlayers = (action: IAction): action is ISetNumberOfPlayers =>
 
 const isSetPlayerMode = (action: IAction): action is ISetPlayerMode => {
   return action.type === ACTIONS.setPlayerMode
+}
+
+const isSetPlayerName = (action: IAction): action is ISetPlayerName => {
+  return action.type === ACTIONS.setPlayerName
 }
 
 const initialState: IStateUserOptions = {
@@ -34,6 +39,7 @@ const reducer: IReducerUserOptions = (state: IStateUserOptions, action: IAction)
       numberOfPlayers
     }
   }
+
   if (isSetPlayerMode(action)) {
     const { playerMode } = action
     return {
@@ -41,6 +47,18 @@ const reducer: IReducerUserOptions = (state: IStateUserOptions, action: IAction)
       playerMode
     }
   }
+
+  if (isSetPlayerName(action)) {
+    const {  playerSystemName, playerName } = action
+    return {
+      ...state,
+      playerNames: {
+        ...state.playerNames,
+        [playerSystemName]: playerName
+      }
+    }
+  }
+
   return state
 }
 
@@ -57,6 +75,11 @@ const UserOptionsMenu: React.FC = () => {
     dispatch({ type: ACTIONS.setPlayerMode, playerMode: value })
   }
 
+  const onPlayerNameInput: TInputOnChangeCallback = (e) => {
+    const { name, value } = e.target
+    dispatch({ type: ACTIONS.setPlayerName, playerSystemName: name, playerName: value })
+  }
+
   useEffect(() => {
     console.log('[debug] <UserOptionsMenu>: state: ', state)
   }, [state])
@@ -65,6 +88,7 @@ const UserOptionsMenu: React.FC = () => {
     <>
       <NumberOfPlayerSelect onChangeHandler={onNumberOfPlayersSelect} numberOfPlayers={state.numberOfPlayers} />
       <PlayerModeSelect onChangeHandler={onPlayerModeSelect} playerMode={state.playerMode} />
+      <PlayerNameSetter numberOfPlayers={state.numberOfPlayers} onChangeHandler={onPlayerNameInput} />
     </>
   )
 }

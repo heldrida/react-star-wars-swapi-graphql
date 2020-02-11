@@ -5,7 +5,8 @@ enum PLAYER_CARD_TYPE {
 
 enum ACTIONS {
   setNumberOfPlayers = 'ACTION_SET_NUMBER_OF_PLAYERS',
-  setPlayerMode = 'ACTION_SET_PLAYER_MODE'
+  setPlayerMode = 'ACTION_SET_PLAYER_MODE',
+  setPlayerName = 'ACTION_SET_PLAYER_NAME'
 }
 
 const PLAYER_MODE_OPTIONS = [
