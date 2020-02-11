@@ -3,6 +3,11 @@ enum PLAYER_CARD_TYPE {
   starships = "starships"
 }
 
+enum ACTIONS {
+  setNumberOfPlayers = 'ACTION_SET_NUMBER_OF_PLAYERS'
+}
+
 export {
+  ACTIONS,
   PLAYER_CARD_TYPE
 }
