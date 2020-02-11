@@ -4,7 +4,7 @@ import { NavigationBar } from './Components'
 import { Home, Results } from './Containers'
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import appConfig from './config'
-import { TPropsTheme, TThemeConf } from './Types'
+import { IPropsTheme, TThemeConf } from './Types'
 import { BoxWrapper } from './Components'
 
 // [TODO]: Use env var to toggle between default and dark theme on build as bonus requirement
@@ -19,8 +19,9 @@ const themeConf: TThemeConf = {
   color7: appConfig.themeColors.default.darkGrey,
   textDark: appConfig.themeColors.default.darkGrey,
   textLight: appConfig.themeColors.default.lightGrey,
+  skyColor: appConfig.themeColors.default.darkBlue,
   foregroundColor: appConfig.themeColors.default.lightBlue,
-  backgroundColor: appConfig.themeColors.default.lightCyan
+  backgroundColor: appConfig.themeColors.default.lightest,
 }
 
 const DefaultStyles = createGlobalStyle`
@@ -28,11 +29,12 @@ const DefaultStyles = createGlobalStyle`
     padding: 0;
     margin: 0;
     line-height: 1.4;
-    background: ${(props: TPropsTheme) => props.theme.backgroundColor};
+    background: ${(props: IPropsTheme) => props.theme.backgroundColor};
   }
   ol, ul {
     list-style: none;
     margin: 0;
+    padding: 0;
   }
 `
 

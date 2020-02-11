@@ -2,12 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import BoxWrapper from '../BoxWrapper'
+import { boxShadowStyle, lightTextShadow } from '../../sharedStyles'
 
 const Navigation = styled.nav`
-  background: ${(props) => props.theme.foregroundColor};
+  background: ${(props) => props.theme.skyColor};
   height: auto;
-  box-shadow: 2px 6px 18px ${(props) => props.theme.color4}, 2px 6px 32px ${(props) => props.theme.color2};
-  border-bottom: 1px solid ${(props) => props.theme.color0};
+
+  ${boxShadowStyle}
 `
 
 const NavigationList = styled.ul`
@@ -23,7 +24,8 @@ const NavigationItem = styled.li`
   margin-right: 3rem;
   letter-spacing: 0.05rem;
   color: white;
-  text-shadow: 1px 2px 16px ${(props) => props.theme.color6}, 3px -3px 4px ${(props) => props.theme.color0};
+
+  ${lightTextShadow}
 
   & > a {
     color: ${(props) => props.theme.textLight};

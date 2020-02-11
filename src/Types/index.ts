@@ -1,8 +1,24 @@
 // types.ts placeholder
 
 type TPLayerMode = string
+
 type TPlayerName = string
+
 type TNumberOfPlayers = number
+
+type TThemeConf = {
+  [name: string]: string,
+  textDark: string,
+  textLight: string,
+  foregroundColor: string,
+  backgroundColor: string,
+  skyColor: string
+}
+
+type TSelectOnChangeCallback = (e: React.ChangeEvent<HTMLSelectElement>) => void
+
+type TInputOnChangeCallback = (event: React.ChangeEvent<HTMLInputElement>) => void
+
 interface IPlayerNames {
   [key: string]: TPlayerName
 }
@@ -69,16 +85,9 @@ interface IPropsPlayerNameSetter {
   numberOfPlayers: TNumberOfPlayers
 }
 
-type TThemeConf = {
-  [name: string]: string
-}
-
-type TPropsTheme = {
+interface IPropsTheme {
   theme: TThemeConf
-};
-
-type TSelectOnChangeCallback = (e: React.ChangeEvent<HTMLSelectElement>) => void
-type TInputOnChangeCallback = (event: React.ChangeEvent<HTMLInputElement>) => void
+}
 
 export {
   IPlayerNames,
@@ -93,7 +102,7 @@ export {
   IPropsPlayerNameSetter,
   IReducerUserOptions,
   TPlayerCardType,
-  TPropsTheme,
+  IPropsTheme,
   IPerson,
   IStarships,
   TThemeConf,

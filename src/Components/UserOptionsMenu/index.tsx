@@ -9,8 +9,39 @@ import {
   IAction,
   ISetNumberOfPlayers,
   ISetPlayerMode,
-  ISetPlayerName } from '../../Types'
+  ISetPlayerName,
+  IPropsTheme } from '../../Types'
   import { PLAYER_CARD_TYPE } from '../../Constants' 
+import styled, { css } from "styled-components"
+import { boxShadowStyle, fontLabelStyle } from '../../sharedStyles'
+
+const elementSpacing = css`
+  padding-bottom: 1rem;
+`
+
+const ItemBlock = styled.div`
+  ${elementSpacing}
+`
+
+const Box = styled.div`
+  width: auto;
+  height: auto;
+  background: ${(props: IPropsTheme) => props.theme.color1};
+  margin-top: 4rem;
+  padding: 1rem 2rem 4rem;
+  border-radius: 10px;
+
+  ${boxShadowStyle}
+`
+
+const TitleBox = styled.p`
+  line-height: 2rem;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: ${(props: IPropsTheme) => props.theme.textDark};
+
+  ${fontLabelStyle}
+`
 
 // type guard
 const isSetNumberOfPlayers = (action: IAction): action is ISetNumberOfPlayers => {
@@ -85,11 +116,20 @@ const UserOptionsMenu: React.FC = () => {
   }, [state])
 
   return (
-    <>
-      <NumberOfPlayerSelect onChangeHandler={onNumberOfPlayersSelect} numberOfPlayers={state.numberOfPlayers} />
-      <PlayerModeSelect onChangeHandler={onPlayerModeSelect} playerMode={state.playerMode} />
-      <PlayerNameSetter numberOfPlayers={state.numberOfPlayers} onChangeHandler={onPlayerNameInput} />
-    </>
+    <Box>
+      <ItemBlock>
+        <TitleBox>{'How many players?'}</TitleBox>
+        <NumberOfPlayerSelect onChangeHandler={onNumberOfPlayersSelect} numberOfPlayers={state.numberOfPlayers} />
+      </ItemBlock>
+      <ItemBlock>
+        <TitleBox>{'Name your players?'}</TitleBox>
+        <PlayerNameSetter numberOfPlayers={state.numberOfPlayers} onChangeHandler={onPlayerNameInput} />
+      </ItemBlock>
+      <ItemBlock>
+        <TitleBox>{'People or Starship cards?'}</TitleBox>
+        <PlayerModeSelect onChangeHandler={onPlayerModeSelect} playerMode={state.playerMode} />
+      </ItemBlock>
+    </Box>
   )
 }
 
