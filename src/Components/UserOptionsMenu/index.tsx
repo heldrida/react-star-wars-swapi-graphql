@@ -13,14 +13,35 @@ import {
   IPropsTheme } from '../../Types'
   import { PLAYER_CARD_TYPE } from '../../Constants' 
 import styled, { css } from "styled-components"
-import { boxShadowStyle, fontLabelStyle } from '../../sharedStyles'
+import { boxShadowStyle, fontLabelStyle, fontTitlesStyle, lightTextShadow } from '../../sharedStyles'
 
 const elementSpacing = css`
   padding-bottom: 1rem;
 `
 
 const ItemBlock = styled.div`
-  ${elementSpacing}
+  ${elementSpacing};
+`
+
+const StartButton = styled.button`
+  background: ${(props: IPropsTheme) => props.theme.skyColor};
+  line-height: 4rem;
+  font-size: 1rem;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0 2rem;
+  margin: 2rem 0;
+  border: none;
+  cursor: pointer;
+  box-shadow: 2px 6px 22px ${(props: IPropsTheme) => props.theme.color2};
+  transition: opacity 0.3s;
+  
+  ${fontTitlesStyle}
+  ${lightTextShadow}
+
+  &:hover {
+    opacity: 0.92;
+  }
 `
 
 const Box = styled.div`
@@ -129,6 +150,7 @@ const UserOptionsMenu: React.FC = () => {
         <TitleBox>{'People or Starship cards?'}</TitleBox>
         <PlayerModeSelect onChangeHandler={onPlayerModeSelect} playerMode={state.playerMode} />
       </ItemBlock>
+      <StartButton>Let's play!</StartButton>
     </Box>
   )
 }
