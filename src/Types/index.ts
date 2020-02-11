@@ -1,13 +1,15 @@
 // types.ts placeholder
 
+type TPLayerMode = string
+type TNumberOfPlayers = number
 interface IPlayerNames {
   [key: string]: string
 }
 
 interface IStateUserOptions {
-  readonly playerType: string
+  readonly playerMode: TPLayerMode
   readonly playerNames: IPlayerNames
-  readonly numberOfPlayers: number
+  readonly numberOfPlayers: TNumberOfPlayers
 }
 
 interface IReducerUserOptions {
@@ -19,10 +21,25 @@ interface IAction {
 }
 
 interface ISetNumberOfPlayers extends IAction {
-  numberOfPlayers: number
+  numberOfPlayers: TNumberOfPlayers
+}
+
+interface ISetPlayerMode extends IAction {
+  playerMode: TPLayerMode
 }
 
 type TPlayerCardType = string
+
+
+interface IPlayerModeSelectProps {
+  onChangeHandler: TSelectOnChangeCallback,
+  playerMode: TPLayerMode
+}
+
+interface INumberOfPlayerSelectProps {
+  onChangeHandler: TSelectOnChangeCallback
+  numberOfPlayers: TNumberOfPlayers
+}
 
 interface IPerson {
   id: string
@@ -56,6 +73,9 @@ export {
   IStateUserOptions,
   IAction,
   ISetNumberOfPlayers,
+  ISetPlayerMode,
+  IPlayerModeSelectProps,
+  INumberOfPlayerSelectProps,
   IReducerUserOptions,
   TPlayerCardType,
   TPropsTheme,

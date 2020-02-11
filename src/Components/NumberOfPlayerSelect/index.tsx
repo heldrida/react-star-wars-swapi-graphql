@@ -1,17 +1,12 @@
 import React from 'react'
 import AppConfiguration from '../../config'
 import { configurationCsvToArr } from '../../Helpers'
-import { TSelectOnChangeCallback } from '../../Types'
-
-interface INumberOfPlayerSelectProps {
-  onChangeHandler: TSelectOnChangeCallback
-  numberOfPlayers: number
-}
+import { INumberOfPlayerSelectProps } from '../../Types'
 
 const { selectableNumberOfPlayersCsv } = AppConfiguration
 const dataToSelectMap: number[] = configurationCsvToArr(selectableNumberOfPlayersCsv)
 
-const NumberOfPlayerSelect: React.FC<INumberOfPlayerSelectProps> = ({onChangeHandler, numberOfPlayers}) => (
+const NumberOfPlayerSelect: React.FC<INumberOfPlayerSelectProps> = ({onChangeHandler, numberOfPlayers}: INumberOfPlayerSelectProps) => (
   <select onChange={onChangeHandler} value={numberOfPlayers}>
     {
       Array.isArray(dataToSelectMap) &&
