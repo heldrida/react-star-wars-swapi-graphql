@@ -1,7 +1,25 @@
 // types.ts placeholder
 
-type TPlayerNames = {
+interface IPlayerNames {
   [key: string]: string
+}
+
+interface IStateUserOptions {
+  readonly playerType: string
+  readonly playerNames: IPlayerNames
+  readonly numberOfPlayers: number
+}
+
+interface IReducerUserOptions {
+  (state: IStateUserOptions, action: any): IStateUserOptions;
+}
+
+interface IAction {
+  type: string
+}
+
+interface ISetNumberOfPlayers extends IAction {
+  numberOfPlayers: number
 }
 
 type TPlayerCardType = string
@@ -34,7 +52,11 @@ type TPropsTheme = {
 type TSelectOnChangeCallback = (e: React.ChangeEvent<HTMLSelectElement>) => void
 
 export {
-  TPlayerNames,
+  IPlayerNames,
+  IStateUserOptions,
+  IAction,
+  ISetNumberOfPlayers,
+  IReducerUserOptions,
   TPlayerCardType,
   TPropsTheme,
   IPerson,
