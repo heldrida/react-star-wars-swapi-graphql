@@ -71,6 +71,21 @@ const SlideLong = keyframes`
   }
 `;
 
+
+const moveForward = keyframes`
+  0% {
+    transform: translateX(0);
+  }
+  /* 20% {
+    transform: translateX(0.5rem);
+  } */
+  100% {
+    transform: translateX(0.44rem);
+  }
+`;
+
+
+
 const LightSaberContainer = styled.div`
   position: absolute;
   top: 50%;
@@ -81,6 +96,7 @@ const LightSaberContainer = styled.div`
   & > svg:last-child {
     position: relative;
     z-index: 0;
+    animation: ${moveForward} 1.2s ease-in-out alternate-reverse infinite;
   }
 
   & > svg:nth-child(1) {
@@ -281,7 +297,7 @@ const UserOptionsMenu: React.FC = () => {
         <NumberOfPlayerSelect onChangeHandler={onNumberOfPlayersSelect} numberOfPlayers={state.numberOfPlayers} />
       </ItemBlock>
       <ItemBlock>
-        <TitleBox>{'Name your players?'}</TitleBox>
+        <TitleBox>{'Type their names?'}</TitleBox>
         <PlayerNameSetter numberOfPlayers={state.numberOfPlayers} onChangeHandler={onPlayerNameInput} />
       </ItemBlock>
       <ItemBlock>
