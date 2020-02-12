@@ -57,6 +57,20 @@ const Slide = keyframes`
   }
 `;
 
+const SlideLong = keyframes`
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-12rem);
+    opacity: 0;
+  }
+`;
+
 const LightSaberContainer = styled.div`
   position: absolute;
   top: 50%;
@@ -64,9 +78,15 @@ const LightSaberContainer = styled.div`
   width: 18rem;
   transform: translateY(-50%) translateX(-50%);
 
+  & > svg:last-child {
+    position: relative;
+    z-index: 0;
+  }
+
   & > svg:nth-child(1) {
     height: 1.42rem;
     position: absolute;
+    z-index: 5;
     top: 0.83rem;
     left: 4rem;
     animation: ${moveX} 0.6s ease-in-out alternate infinite;
@@ -75,6 +95,7 @@ const LightSaberContainer = styled.div`
   & > svg:nth-child(2) {
     height: 1.42rem;
     position: absolute;
+    z-index: 5;
     top: 3.65rem;
     left: -1rem;
     animation: ${moveX} 0.6s ease-in-out alternate-reverse infinite;
@@ -83,6 +104,7 @@ const LightSaberContainer = styled.div`
   & > svg:nth-child(3) {
     height: 1.42rem;
     position: absolute;
+    z-index: 5;
     top: 6.48rem;
     left: 2rem;
     animation: ${moveX} 0.6s ease-in-out alternate infinite;
@@ -109,15 +131,16 @@ const LightSaberContainer = styled.div`
     top: 12.48rem;
     left: 10rem;
     position: absolute;
-    animation: ${scale} 1.2s ease-in-out alternate infinite, ${Slide} 2s infinite;
+    animation: ${scale} 1.2s ease-in-out alternate infinite, ${SlideLong} 8s infinite;
   }
 
   & > svg:nth-child(7) {
-    height: 1.8rem;
+    height: 3rem;
     top: 19.48rem;
     left: 16rem;
     position: absolute;
-    animation: ${scale} 0.8s ease-in-out alternate-reverse infinite, ${Slide} 1s infinite;
+    z-index: -1;
+    animation: ${scale} 0.8s ease-in-out alternate-reverse infinite, ${SlideLong} 2s infinite;
   }
 `
 
@@ -145,10 +168,10 @@ const StartButton = styled.button`
 const Box = styled.div`
   width: auto;
   height: auto;
-  background: ${(props: IPropsTheme) => props.theme.color1};
   margin-top: 4rem;
   padding: 1rem 2rem 2rem;
   position: relative;
+  background-image: linear-gradient(to left, ${(props: IPropsTheme) => props.theme.color1}, ${(props: IPropsTheme) => props.theme.color1}, ${(props: IPropsTheme) => props.theme.color1}, ${(props: IPropsTheme) => props.theme.color0});
 
   ${boxShadowStyle}
 `
