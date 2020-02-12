@@ -16,7 +16,11 @@ const Logo = styled.div`
 `;
 
 const Navigation = styled.nav`
-  background-image: linear-gradient(to right, ${(props) => props.theme.skyColor}, ${(props) => props.theme.skyColor}, ${(props) => props.theme.color6}, ${(props) => props.theme.color3});
+  background-image: linear-gradient(to right, #A899C8, #C8B6C5);
+  /* background-image: linear-gradient(to right, ${(props) => props.theme.skyColor}, ${(props) => props.theme.skyColor}, ${(props) => props.theme.color6}, ${(props) => props.theme.color3}); */
+  /* alternative background gradies */
+  /* linear-gradient(to right, #CEB8FF, #C8B6C5) */
+  /* linear-gradient(to right, #A899C8, #C8B6C5) */
   height: auto;
 
   ${boxShadowStyle}
@@ -39,12 +43,13 @@ const NavigationItem = styled.li`
   letter-spacing: 0.05rem;
   color: white;
 
-  ${lightTextShadow}
+  /* ${lightTextShadow} */
 
   & > a {
     color: ${(props) => props.theme.textLight};
     text-decoration: none;
-    font-family: "Fredoka One", sans-serif;
+    /* font-family: "Fredoka One", sans-serif; */
+    font-family: "Nunito", sans-serif;
     transition: opacity .2s;
     opacity: 1;
 

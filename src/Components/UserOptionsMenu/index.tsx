@@ -172,9 +172,9 @@ const StartButton = styled.button`
   cursor: pointer;
   box-shadow: 2px 6px 22px ${(props: IPropsTheme) => props.theme.color2};
   transition: opacity 0.3s;
-  
-  ${fontTitlesStyle}
-  ${lightTextShadow}
+  font-family: "Nunito", sans-serif;  
+  /* ${fontTitlesStyle}
+  ${lightTextShadow} */
 
   &:hover {
     opacity: 0.92;
