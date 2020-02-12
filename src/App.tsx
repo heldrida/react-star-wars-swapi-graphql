@@ -36,6 +36,9 @@ const DefaultStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+  *:focus {
+    outline: none;
+  }
 `
 
 const App = () => {
