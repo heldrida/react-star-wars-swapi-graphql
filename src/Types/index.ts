@@ -110,6 +110,7 @@ interface IQueries {
 
 interface IPropsCard {
   zIndex: number,
+  rotate: number,
   translateXY: string, // example csv: "80px, 30px"
   showFace: boolean
 }

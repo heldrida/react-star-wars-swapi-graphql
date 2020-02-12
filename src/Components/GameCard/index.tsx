@@ -29,7 +29,7 @@ const cardFace = css`
   backface-visibility: hidden;
   border: 4px solid ${(props: IPropsTheme) => props.theme.color1};
   border-radius: 1rem;
-  box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.14)
+  box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.14);
 `
 
 const Scene = styled.div<TPropFlag>`
@@ -40,7 +40,7 @@ const Scene = styled.div<TPropFlag>`
   position: absolute;
   z-index: ${(props: TPropFlag) => props.zIndex};
   transition: transform 0.6s ease-out;
-  transform: ${(props: TPropFlag) => `translate(${props.translateXY})`};
+  transform: ${(props: TPropFlag) => `translate(${props.translateXY}) rotate(${props.rotate}deg)`};
 `
 
 const SceneCard = styled.div<TPropFlag>`
@@ -89,9 +89,10 @@ const SceneCardBack = styled.div`
 `
 
 const GameCard = (props: IPropsCard) => {
-  const { translateXY, showFace, zIndex } = props  
+  const { translateXY, rotate, showFace, zIndex } = props  
+
   return (
-    <Scene translateXY={translateXY} zIndex={zIndex}>
+    <Scene translateXY={translateXY} rotate={rotate} zIndex={zIndex}>
       <SceneCard showFace={showFace}>
         <SceneCardFront>
           <List>

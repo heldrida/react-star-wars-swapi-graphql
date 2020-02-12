@@ -19,12 +19,8 @@ const GameBoard = (props: IStateUserOptions) => {
     const translateXY = `${posX}, ${posY}`
     const showFace = false
     const zIndex = 1
-    console.log({
-      translateXY,
-      showFace,
-      zIndex
-    })
-    return <GameCard translateXY={translateXY} showFace={showFace} zIndex={zIndex} />
+    const rotate = Math.random() * 0.8 // humanize right :)
+    return <GameCard translateXY={translateXY} rotate={rotate} showFace={showFace} zIndex={zIndex} />
   }
 
   useEffect(() => {
