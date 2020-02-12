@@ -90,6 +90,10 @@ interface IPropsTheme {
   theme: TThemeConf
 }
 
+type TPropFlag = {
+  [name: string]: any
+}
+
 interface IDispatchUserOptions {
   (action: React.SetStateAction<IStateUserOptions | undefined>): void
 }
@@ -122,6 +126,7 @@ export {
   IReducerUserOptions,
   TPlayerCardType,
   IPropsTheme,
+  TPropFlag,
   IPerson,
   IStarships,
   TThemeConf,

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { IStateUserOptions } from '../../Types'
 import { starWarsAPI } from '../../Queries'
+import GameCard from '../GameCard'
 
 const GameBoard = (props: IStateUserOptions) => {
   const { playerMode } = props
@@ -12,9 +13,9 @@ const GameBoard = (props: IStateUserOptions) => {
   }, [queryResponseData])
 
   return (
-    <p>
-      {'<GameBoard /> component!'}
-    </p>
+    <>
+      <GameCard />
+    </>
   )
 }
 

@@ -15,7 +15,7 @@ import {
 import styled, { css, keyframes } from "styled-components"
 import { boxShadowStyle, fontLabelStyle, fontTitlesStyle, lightTextShadow } from '../../sharedStyles'
 import { useUserOptionsSetter } from '../../Context'
-import { LightSaber, BarShort, Star } from '../../Icons'
+import { LightSaber, BarShort, StarIcon as Star } from '../../Icons'
 
 const elementSpacing = css`
   padding-bottom: 1rem;
