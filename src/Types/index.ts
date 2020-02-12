@@ -112,7 +112,8 @@ interface IPropsCard {
   zIndex: number,
   rotate: number,
   translateXY: string, // example csv: "80px, 30px"
-  showFace: boolean
+  showFace: boolean,
+  visibilityDelay: number
 }
 
 export {

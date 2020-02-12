@@ -20,14 +20,15 @@ const GameBoard = (props: IStateUserOptions) => {
     const showFace = true
     const zIndex = 1
     const rotate = Math.random() * 0.8 // humanize right :)
-    return <GameCard translateXY={translateXY} rotate={rotate} showFace={showFace} zIndex={zIndex} />
+    const visibilityDelay = index * 60
+    return <GameCard translateXY={translateXY} rotate={rotate} showFace={showFace} visibilityDelay={visibilityDelay} zIndex={zIndex} />
   }
 
   useEffect(() => {
     console.log('[debug] queryResponseData: ', queryResponseData)
   }, [queryResponseData])
 
-  const mock = [...Array(86)]
+  const mock = [...Array(52)]
 
   return (
     <CardDeckContainer>

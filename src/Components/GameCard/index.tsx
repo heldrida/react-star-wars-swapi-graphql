@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { StarIcon } from '../../Icons'
 import { IPropsTheme, TPropFlag, IPropsCard } from '../../Types'
@@ -33,8 +33,8 @@ const cardFace = css`
 `
 
 const Scene = styled.div<TPropFlag>`
-  width: 14rem;
-  height: 20rem;
+  width: 8.5rem;
+  height: 12rem;
   margin: 40px 0;
   perspective: 600px;
   position: absolute;
@@ -46,13 +46,26 @@ const Scene = styled.div<TPropFlag>`
 const SceneCard = styled.div<TPropFlag>`
   width: 100%;
   height: 100%;
-  transition: transform 1s;
+  visibility: hidden;
   transform-style: preserve-3d;
   transform-origin: 50% 50%;
   cursor: pointer;
   position: relative;
+  top: -3rem;
+  right: -6rem;
+  transition: transform 1s, top 1.6s, right 1.6s;
   transform: ${(props: TPropFlag) =>
     props.showFace ? `rotateY(180deg)` : `rotateY(0deg)`};
+
+${props => {
+    if (props.visible) {
+      return `
+        visibility: visible;
+        top: 0;
+        right: 0;
+      `;
+    }
+  }}
 `
 
 const SceneCardFront = styled.div`
@@ -89,11 +102,15 @@ const SceneCardBack = styled.div`
 `
 
 const GameCard = (props: IPropsCard) => {
-  const { translateXY, rotate, showFace, zIndex } = props  
-
+  const { translateXY, rotate, showFace, zIndex, visibilityDelay } = props  
+  const [visible, setVisible] = useState(false)
+  let t = setTimeout(() => {
+    setVisible(true)
+    clearTimeout(t)
+  }, visibilityDelay)
   return (
     <Scene translateXY={translateXY} rotate={rotate} zIndex={zIndex}>
-      <SceneCard showFace={showFace}>
+      <SceneCard showFace={showFace} visible={visible}>
         <SceneCardFront>
           <List>
             <ListItem>
