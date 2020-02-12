@@ -95,7 +95,7 @@ const LightSaberContainer = styled.div`
     top: 12.48rem;
     left: 10rem;
     position: absolute;
-    animation: ${scale} 0.4s ease-in-out alternate infinite;
+    animation: ${scale} 1.2s ease-in-out alternate infinite;
   }
 
   & > svg:nth-child(7) {
@@ -103,7 +103,7 @@ const LightSaberContainer = styled.div`
     top: 19.48rem;
     left: 16rem;
     position: absolute;
-    animation: ${scale} 0.4s ease-in-out alternate-reverse infinite;
+    animation: ${scale} 0.8s ease-in-out alternate-reverse infinite;
   }
 `
 
