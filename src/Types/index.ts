@@ -108,6 +108,12 @@ interface IQueries {
   [name: string]: DocumentNode
 }
 
+interface IPropsCard {
+  zIndex: number,
+  translateXY: string, // example csv: "80px, 30px"
+  showFace: boolean
+}
+
 export {
   IPlayerNames,
   IStateUserOptions,
@@ -130,5 +136,6 @@ export {
   IPerson,
   IStarships,
   TThemeConf,
-  TSelectOnChangeCallback
+  TSelectOnChangeCallback,
+  IPropsCard
 }
