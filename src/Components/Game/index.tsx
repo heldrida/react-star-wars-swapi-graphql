@@ -1,18 +1,49 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import GameBoard from '../GameBoard'
 import { useUserOptionsState } from '../../Context'
 import UserOptionsMenu from '../UserOptionsMenu'
+import posed, { PoseGroup } from 'react-pose'
+
+const AnimationContainer = posed.div({
+  enter: {
+    transition: {
+      y: { duration: 400, ease: 'easeInOut' }
+    },
+    y: 0,
+    opacity: 1,
+    delay: 320,
+  },
+  exit: {
+    transition: { duration: 160 },
+    opacity: 0.2,
+    y: 40,
+  }
+})
 
 const Game = () => {
   const userOptionsState = useUserOptionsState()
+  const [isVisible, setIsVisible] = useState(false)
+
+  setTimeout(() => {
+    setIsVisible(true)
+  }, 400)
+
   return (
-    <>
+    <PoseGroup>
       {
-        ((!userOptionsState || !userOptionsState.play) &&
-        <UserOptionsMenu />) ||
-        <GameBoard />
+        isVisible && (
+          (
+            (!userOptionsState || !userOptionsState.play) &&
+            <AnimationContainer key="userOptionsMenu">
+              <UserOptionsMenu />
+            </AnimationContainer>
+          ) ||
+          <AnimationContainer key="gameBoard">
+            <GameBoard />
+          </AnimationContainer>
+        )
       }
-    </>
+    </PoseGroup>
   )
 }
 
