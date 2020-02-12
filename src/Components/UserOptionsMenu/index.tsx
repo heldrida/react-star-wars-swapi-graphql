@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer, useCallback } from 'react'
 import AppConfiguration from '../../config'
 import { NumberOfPlayerSelect, PlayerModeSelect, PlayerNameSetter } from '../../Components'
 import { TSelectOnChangeCallback, TInputOnChangeCallback } from '../../Types'
@@ -14,6 +14,7 @@ import {
   import { PLAYER_CARD_TYPE } from '../../Constants' 
 import styled, { css } from "styled-components"
 import { boxShadowStyle, fontLabelStyle, fontTitlesStyle, lightTextShadow } from '../../sharedStyles'
+import { useUserOptionsSetter } from '../../Context'
 
 const elementSpacing = css`
   padding-bottom: 1rem;
@@ -49,7 +50,7 @@ const Box = styled.div`
   height: auto;
   background: ${(props: IPropsTheme) => props.theme.color1};
   margin-top: 4rem;
-  padding: 1rem 2rem 4rem;
+  padding: 1rem 2rem 2rem;
   border-radius: 10px;
 
   ${boxShadowStyle}
@@ -132,6 +133,9 @@ const UserOptionsMenu: React.FC = () => {
     dispatch({ type: ACTIONS.setPlayerName, playerSystemName: name, playerName: value })
   }
 
+  const onComplete = useUserOptionsSetter()
+  const onCompleteHandler = () => onComplete(state)
+
   useEffect(() => {
     console.log('[debug] <UserOptionsMenu>: state: ', state)
   }, [state])
@@ -150,7 +154,7 @@ const UserOptionsMenu: React.FC = () => {
         <TitleBox>{'People or Starship cards?'}</TitleBox>
         <PlayerModeSelect onChangeHandler={onPlayerModeSelect} playerMode={state.playerMode} />
       </ItemBlock>
-      <StartButton>Let's play!</StartButton>
+      <StartButton onClick={onCompleteHandler}>Let's play!</StartButton>
     </Box>
   )
 }

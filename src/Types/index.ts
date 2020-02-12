@@ -89,15 +89,28 @@ interface IPropsTheme {
   theme: TThemeConf
 }
 
+interface IDispatchUserOptions {
+  (action: React.SetStateAction<IStateUserOptions | undefined>): void
+}
+
+type TJSXElement = JSX.Element
+
+interface IPropsGameProvider {
+  children: TJSXElement[] | TJSXElement
+}
+
 export {
   IPlayerNames,
   IStateUserOptions,
   IAction,
+  IDispatchUserOptions,
   ISetNumberOfPlayers,
   ISetPlayerMode,
   ISetPlayerName,
   IPlayerModeSelectProps,
   INumberOfPlayerSelectProps,
+  IPropsGameProvider,
+  TJSXElement,
   TInputOnChangeCallback,
   IPropsPlayerNameSetter,
   IReducerUserOptions,
