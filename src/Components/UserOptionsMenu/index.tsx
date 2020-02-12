@@ -12,9 +12,10 @@ import {
   ISetPlayerName,
   IPropsTheme } from '../../Types'
   import { PLAYER_CARD_TYPE } from '../../Constants' 
-import styled, { css } from "styled-components"
+import styled, { css, keyframes } from "styled-components"
 import { boxShadowStyle, fontLabelStyle, fontTitlesStyle, lightTextShadow } from '../../sharedStyles'
 import { useUserOptionsSetter } from '../../Context'
+import { LightSaber, BarShort, Star } from '../../Icons'
 
 const elementSpacing = css`
   padding-bottom: 1rem;
@@ -22,6 +23,88 @@ const elementSpacing = css`
 
 const ItemBlock = styled.div`
   ${elementSpacing};
+`
+
+const moveX = keyframes`
+  from {
+    transform: translateX(1rem);
+  }
+  to {
+    transform: translateX(0rem);
+  }
+`;
+
+const scale = keyframes`
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.8);
+  }
+`;
+
+const LightSaberContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 5rem;
+  width: 18rem;
+  transform: translateY(-50%) translateX(-50%);
+
+  & > svg:nth-child(1) {
+    height: 1.42rem;
+    position: absolute;
+    top: 0.83rem;
+    left: 4rem;
+    animation: ${moveX} 0.6s ease-in-out alternate infinite;
+  }
+
+  & > svg:nth-child(2) {
+    height: 1.42rem;
+    position: absolute;
+    top: 3.65rem;
+    left: -1rem;
+    animation: ${moveX} 0.6s ease-in-out alternate-reverse infinite;
+  }
+
+  & > svg:nth-child(3) {
+    height: 1.42rem;
+    position: absolute;
+    top: 6.48rem;
+    left: 2rem;
+    animation: ${moveX} 0.6s ease-in-out alternate infinite;
+  }
+
+  & > svg:nth-child(4) {
+    position: absolute;
+    height: 2.2rem;
+    top: 8.48rem;
+    left: 22rem;
+    animation: ${scale} 0.4s ease-in-out alternate-reverse infinite;
+  }
+
+  & > svg:nth-child(5) {
+    height: 1.65rem;
+    position: absolute;
+    top: -4.52rem;
+    left: -1rem;
+    animation: ${scale} 0.4s ease-in-out alternate-reverse infinite;
+  }
+
+  & > svg:nth-child(6) {
+    height: 1.2rem;
+    top: 12.48rem;
+    left: 10rem;
+    position: absolute;
+    animation: ${scale} 0.4s ease-in-out alternate infinite;
+  }
+
+  & > svg:nth-child(7) {
+    height: 1.8rem;
+    top: 19.48rem;
+    left: 16rem;
+    position: absolute;
+    animation: ${scale} 0.4s ease-in-out alternate-reverse infinite;
+  }
 `
 
 const StartButton = styled.button`
@@ -51,7 +134,7 @@ const Box = styled.div`
   background: ${(props: IPropsTheme) => props.theme.color1};
   margin-top: 4rem;
   padding: 1rem 2rem 2rem;
-  border-radius: 10px;
+  position: relative;
 
   ${boxShadowStyle}
 `
@@ -155,6 +238,16 @@ const UserOptionsMenu: React.FC = () => {
         <PlayerModeSelect onChangeHandler={onPlayerModeSelect} playerMode={state.playerMode} />
       </ItemBlock>
       <StartButton onClick={onCompleteHandler}>Let's play!</StartButton>
+      <LightSaberContainer>
+        <BarShort />
+        <BarShort />
+        <BarShort />
+        <Star />
+        <Star />
+        <Star />
+        <Star />
+        <LightSaber />
+      </LightSaberContainer>
     </Box>
   )
 }
