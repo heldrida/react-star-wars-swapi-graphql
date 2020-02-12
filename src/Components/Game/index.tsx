@@ -5,9 +5,6 @@ import UserOptionsMenu from '../UserOptionsMenu'
 
 const Game = () => {
   const userOptionsState = useUserOptionsState()
-  useEffect(() => {
-    console.log('[debug] Home: userOptionsState: ', userOptionsState)
-  }, [userOptionsState])
   return (
     <>
       {
