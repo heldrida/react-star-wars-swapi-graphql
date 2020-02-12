@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import GameBoard from '../GameBoard'
 import { useUserOptionsState } from '../../Context'
 import UserOptionsMenu from '../UserOptionsMenu'
 import posed, { PoseGroup } from 'react-pose'
+import { IStateUserOptions } from '../../Types'
 
 const AnimationContainer = posed.div({
   enter: {
@@ -21,7 +22,7 @@ const AnimationContainer = posed.div({
 })
 
 const Game = () => {
-  const userOptionsState = useUserOptionsState()
+  const userOptionsState: IStateUserOptions = useUserOptionsState()
   const [isVisible, setIsVisible] = useState(false)
 
   setTimeout(() => {
@@ -39,7 +40,7 @@ const Game = () => {
             </AnimationContainer>
           ) ||
           <AnimationContainer key="gameBoard">
-            <GameBoard />
+            <GameBoard {...userOptionsState} />
           </AnimationContainer>
         )
       }

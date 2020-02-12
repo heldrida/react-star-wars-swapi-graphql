@@ -31,7 +31,7 @@ const useContextCreator = (name: string, context: React.Context<any>) => {
   return ctx
 }
 
-function useUserOptionsState() {
+function useUserOptionsState(): IStateUserOptions {
   const userOptionsState = useContextCreator('GameState', GameStateContext)
   return userOptionsState
 }

@@ -1,0 +1,1 @@
+export { default as starWarsAPI } from './starWarsAPI'

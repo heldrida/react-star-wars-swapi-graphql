@@ -1,4 +1,4 @@
-// types.ts placeholder
+import { DocumentNode } from 'apollo-boost'
 
 type TPLayerMode = string
 
@@ -100,6 +100,10 @@ interface IPropsGameProvider {
   children: TJSXElement[] | TJSXElement
 }
 
+interface IQueries {
+  [name: string]: DocumentNode
+}
+
 export {
   IPlayerNames,
   IStateUserOptions,
@@ -112,6 +116,7 @@ export {
   INumberOfPlayerSelectProps,
   IPropsGameProvider,
   TJSXElement,
+  IQueries,
   TInputOnChangeCallback,
   IPropsPlayerNameSetter,
   IReducerUserOptions,
