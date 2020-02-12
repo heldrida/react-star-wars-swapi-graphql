@@ -161,7 +161,8 @@ const LightSaberContainer = styled.div`
 `
 
 const StartButton = styled.button`
-  background: ${(props: IPropsTheme) => props.theme.skyColor};
+  /* background: ${(props: IPropsTheme) => props.theme.skyColor}; */
+  background: #28adfd;
   line-height: 4rem;
   font-size: 1rem;
   color: #fff;
@@ -177,7 +178,7 @@ const StartButton = styled.button`
   ${lightTextShadow} */
 
   &:hover {
-    opacity: 0.92;
+    opacity: 0.68;
   }
 `
 
