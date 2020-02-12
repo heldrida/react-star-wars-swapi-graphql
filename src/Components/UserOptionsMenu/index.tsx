@@ -161,10 +161,15 @@ const isSetPlayerName = (action: IAction): action is ISetPlayerName => {
   return action.type === ACTIONS.setPlayerName
 }
 
+const isPlayStart = (action: IAction): action is IAction => {
+  return action.type === ACTIONS.setPlayStart
+}
+
 const initialState: IStateUserOptions = {
   playerMode: PLAYER_CARD_TYPE.people,
   playerNames: {},
-  numberOfPlayers: AppConfiguration.application.defaultNumberOfPlayers
+  numberOfPlayers: AppConfiguration.application.defaultNumberOfPlayers,
+  play: false
 }
 
 const reducer: IReducerUserOptions = (state: IStateUserOptions, action: IAction): IStateUserOptions => {
@@ -195,6 +200,13 @@ const reducer: IReducerUserOptions = (state: IStateUserOptions, action: IAction)
     }
   }
 
+  if (isPlayStart(action)) {
+    return {
+      ...state,
+      play: true
+    }
+  }
+
   return state
 }
 
@@ -217,11 +229,13 @@ const UserOptionsMenu: React.FC = () => {
   }
 
   const onComplete = useUserOptionsSetter()
-  const onCompleteHandler = () => onComplete(state)
+  const onCompleteHandler = () => {
+    dispatch({ type: ACTIONS.setPlayStart })
+  }
 
   useEffect(() => {
-    console.log('[debug] <UserOptionsMenu>: state: ', state)
-  }, [state])
+    onComplete(state)
+  }, [onComplete, state])
 
   return (
     <Box>

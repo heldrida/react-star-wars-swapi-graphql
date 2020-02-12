@@ -27,6 +27,7 @@ interface IStateUserOptions {
   readonly playerMode: TPLayerMode
   readonly playerNames: IPlayerNames
   readonly numberOfPlayers: TNumberOfPlayers
+  readonly play: boolean
 }
 
 interface IReducerUserOptions {
