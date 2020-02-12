@@ -1,24 +1,6 @@
-import React, { useEffect } from 'react'
-import { UserOptionsMenu } from '../../Components'
-import { GameProvider, useUserOptionsState } from '../../Context'
-
-const GameBoard = () => <p>{'Component <GameBoard />'}</p>
-
-const Game = () => {
-  const userOptionsState = useUserOptionsState()
-  useEffect(() => {
-    console.log('[debug] Home: userOptionsState: ', userOptionsState)
-  }, [userOptionsState])
-  return (
-    <>
-      {
-        ((!userOptionsState || !userOptionsState.play) &&
-        <UserOptionsMenu />) ||
-        <GameBoard />
-      }
-    </>
-  )
-}
+import React from 'react'
+import { Game } from '../../Components'
+import { GameProvider } from '../../Context'
 
 const Home = () => {
   return (
