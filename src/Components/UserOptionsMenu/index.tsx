@@ -36,10 +36,24 @@ const moveX = keyframes`
 
 const scale = keyframes`
   from {
-    transform: scale(1);
+    transform: scale(1) translateX(0);
   }
   to {
     transform: scale(0.8);
+  }
+`;
+
+const Slide = keyframes`
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-3rem);
+    opacity: 0;
   }
 `;
 
@@ -79,7 +93,7 @@ const LightSaberContainer = styled.div`
     height: 2.2rem;
     top: 8.48rem;
     left: 22rem;
-    animation: ${scale} 0.4s ease-in-out alternate-reverse infinite;
+    animation: ${scale} 0.4s ease-in-out alternate-reverse infinite, ${Slide} 2s infinite;
   }
 
   & > svg:nth-child(5) {
@@ -87,7 +101,7 @@ const LightSaberContainer = styled.div`
     position: absolute;
     top: -4.52rem;
     left: -1rem;
-    animation: ${scale} 0.4s ease-in-out alternate-reverse infinite;
+    animation: ${scale} 0.4s ease-in-out alternate-reverse infinite, ${Slide} 4s infinite;
   }
 
   & > svg:nth-child(6) {
@@ -95,7 +109,7 @@ const LightSaberContainer = styled.div`
     top: 12.48rem;
     left: 10rem;
     position: absolute;
-    animation: ${scale} 1.2s ease-in-out alternate infinite;
+    animation: ${scale} 1.2s ease-in-out alternate infinite, ${Slide} 2s infinite;
   }
 
   & > svg:nth-child(7) {
@@ -103,7 +117,7 @@ const LightSaberContainer = styled.div`
     top: 19.48rem;
     left: 16rem;
     position: absolute;
-    animation: ${scale} 0.8s ease-in-out alternate-reverse infinite;
+    animation: ${scale} 0.8s ease-in-out alternate-reverse infinite, ${Slide} 1s infinite;
   }
 `
 
