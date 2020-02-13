@@ -98,10 +98,10 @@ const upDown = keyframes`
 
 const backForth = keyframes`
   0% {
-    transform: translateX(0) rotate(80deg);
+    transform: translateX(0) rotate(90deg);
   }
   100% {
-    transform: translateX(0.68rem) rotate(80deg);
+    transform: translateX(0.68rem) rotate(90deg);
   }
 `
 
