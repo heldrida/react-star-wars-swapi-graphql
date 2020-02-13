@@ -83,6 +83,15 @@ interface IStarships {
 
 type TDeckCard = IPerson | IStarships
 
+interface IQueryResponseData {
+  allPeople?: {
+    people?: IPerson[]
+  },
+  allStarships?: {
+    starships?: IStarships[]
+  }
+}
+
 interface IPropsPlayerNameSetter {
   onChangeHandler: TInputOnChangeCallback
   numberOfPlayers: TNumberOfPlayers
@@ -143,5 +152,6 @@ export {
   TThemeConf,
   TSelectOnChangeCallback,
   IPropsCard,
-  TPlayerMode
+  TPlayerMode,
+  IQueryResponseData
 }

@@ -1,21 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { IStateUserOptions } from '../../Types'
+import { IStateUserOptions, TDeckCard } from '../../Types'
 import { starWarsAPI } from '../../Queries'
 import GameCard from '../GameCard'
 import styled from 'styled-components'
-import { getRandomStandardSizeCardDeckFromList } from '../../Helpers'
+import { getPlayerModeListDataFromQueryResult,
+         getCardDeck } from '../../Helpers'
 
 const CardDeckContainer = styled.div`
   position: relative;
 `
 
 const GameBoard = (props: IStateUserOptions) => {
+  const [cardDeck, setCardDeck] = useState<TDeckCard[] | undefined>(undefined)  
   const { playerMode } = props
   const { data: queryResponseData } = useQuery(starWarsAPI[playerMode])
-
-  console.log('queryResponseData: ', queryResponseData)
-  // getRandomStandardSizeCardDeckFromList()
 
   const positionCardOnDeck = (index: number) => {
     const posX: string = (index + 2) + 'px';
@@ -29,15 +28,17 @@ const GameBoard = (props: IStateUserOptions) => {
   }
 
   useEffect(() => {
-    console.log('[debug] queryResponseData: ', queryResponseData)
-  }, [queryResponseData])
-
-  const mock = [...Array(52)]
+    const haystack = getPlayerModeListDataFromQueryResult(playerMode, queryResponseData)
+    const cardDeck = haystack &&
+                     getCardDeck(haystack)
+    cardDeck && setCardDeck(cardDeck)
+  }, [queryResponseData, playerMode, setCardDeck])
 
   return (
     <CardDeckContainer>
       {
-        mock.map((value, index) => positionCardOnDeck(index))
+        cardDeck &&
+        cardDeck.map((value, index) => positionCardOnDeck(index))
       }
     </CardDeckContainer>
   )
