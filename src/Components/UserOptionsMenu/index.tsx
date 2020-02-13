@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useCallback } from 'react'
 import AppConfiguration from '../../config'
 import { NumberOfPlayerSelect, PlayerModeSelect, PlayerNameSetter } from '../../Components'
 import { TSelectOnChangeCallback, TInputOnChangeCallback } from '../../Types'
-import { ACTIONS } from '../../Constants'
+import { ACTIONS, PLAYER_MODE_OPTIONS } from '../../Constants'
 import {
   IStateUserOptions,
   IReducerUserOptions,
@@ -15,7 +15,7 @@ import {
 import styled, { css, keyframes } from "styled-components"
 import { boxShadowStyle, fontLabelStyle, fontTitlesStyle, lightTextShadow } from '../../sharedStyles'
 import { useUserOptionsSetter } from '../../Context'
-import { LightSaber, BarShort, StarIcon as Star } from '../../Icons'
+import { LightSaber, BarShort, StarIcon as Star, AngelFire } from '../../Icons'
 
 const elementSpacing = css`
   padding-bottom: 1rem;
@@ -84,7 +84,26 @@ const moveForward = keyframes`
   }
 `;
 
+const upDown = keyframes`
+  0% {
+    transform: translateY(0);
+  }
+  /* 20% {
+    transform: translateX(0.5rem);
+  } */
+  100% {
+    transform: translateY(0.44rem);
+  }
+`;
 
+const backForth = keyframes`
+  0% {
+    transform: translateX(0) rotate(80deg);
+  }
+  100% {
+    transform: translateX(0.68rem) rotate(80deg);
+  }
+`
 
 const LightSaberContainer = styled.div`
   position: absolute;
@@ -151,6 +170,53 @@ const LightSaberContainer = styled.div`
   }
 
   & > svg:nth-child(7) {
+    height: 3rem;
+    top: 19.48rem;
+    left: 16rem;
+    position: absolute;
+    z-index: -1;
+    animation: ${scale} 0.8s ease-in-out alternate-reverse infinite, ${SlideLong} 2s infinite;
+  }
+`
+
+const AngelFireContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 5rem;
+  width: 18rem;
+  transform: translateY(-50%) translateX(-50%);
+
+  & > svg:last-child {
+    position: relative;
+    z-index: 0;
+    animation: ${backForth} 0.9s ease-in-out alternate-reverse infinite;
+  }
+
+  & > svg:nth-child(1) {
+    position: absolute;
+    height: 2.2rem;
+    top: 8.48rem;
+    left: 22rem;
+    animation: ${scale} 0.4s ease-in-out alternate-reverse infinite, ${Slide} 2s infinite;
+  }
+
+  & > svg:nth-child(2) {
+    height: 1.65rem;
+    position: absolute;
+    top: -4.52rem;
+    left: -1rem;
+    animation: ${scale} 0.4s ease-in-out alternate-reverse infinite, ${Slide} 4s infinite;
+  }
+
+  & > svg:nth-child(3) {
+    height: 1.2rem;
+    top: 12.48rem;
+    left: 10rem;
+    position: absolute;
+    animation: ${scale} 1.2s ease-in-out alternate infinite, ${SlideLong} 8s infinite;
+  }
+
+  & > svg:nth-child(4) {
     height: 3rem;
     top: 19.48rem;
     left: 16rem;
@@ -306,16 +372,26 @@ const UserOptionsMenu: React.FC = () => {
         <PlayerModeSelect onChangeHandler={onPlayerModeSelect} playerMode={state.playerMode} />
       </ItemBlock>
       <StartButton onClick={onCompleteHandler}>Let's play!</StartButton>
-      <LightSaberContainer>
-        <BarShort />
-        <BarShort />
-        <BarShort />
-        <Star />
-        <Star />
-        <Star />
-        <Star />
-        <LightSaber />
-      </LightSaberContainer>
+      {
+        (state.playerMode === PLAYER_CARD_TYPE.people &&
+        <LightSaberContainer>
+          <BarShort />
+          <BarShort />
+          <BarShort />
+          <Star />
+          <Star />
+          <Star />
+          <Star />
+          <LightSaber />
+        </LightSaberContainer>) ||
+        <AngelFireContainer>
+          <Star />
+          <Star />
+          <Star />
+          <Star />
+          <AngelFire />
+        </AngelFireContainer>
+      }
     </Box>
   )
 }
