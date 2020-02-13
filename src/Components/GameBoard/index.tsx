@@ -16,7 +16,7 @@ const GameBoard = (props: IStateUserOptions) => {
   const { playerMode } = props
   const { data: queryResponseData } = useQuery(starWarsAPI[playerMode])
 
-  const positionCardOnDeck = (index: number) => {
+  const positionCardOnDeck = (index: number, cardDeck: TDeckCard) => {
     const posX: string = (index + 2) + 'px';
     const posY: string = (index + 2) + 'px';
     const translateXY = `${posX}, ${posY}`
@@ -24,13 +24,20 @@ const GameBoard = (props: IStateUserOptions) => {
     const zIndex = 1
     const rotate = Math.random() * 0.8 // humanize it, right? :)
     const visibilityDelay = index * 60
-    return <GameCard key={index} translateXY={translateXY} rotate={rotate} showFace={showFace} visibilityDelay={visibilityDelay} zIndex={zIndex} />
+    return <GameCard key={index}
+                     metadata={cardDeck}
+                     translateXY={translateXY}
+                     rotate={rotate}
+                     showFace={showFace}
+                     visibilityDelay={visibilityDelay}
+                     zIndex={zIndex} />
   }
 
   useEffect(() => {
     const haystack = getPlayerModeListDataFromQueryResult(playerMode, queryResponseData)
     const cardDeck = haystack &&
                      getCardDeck(haystack)
+    console.log('[debug] cardDeck: ', cardDeck)
     cardDeck && setCardDeck(cardDeck)
   }, [queryResponseData, playerMode, setCardDeck])
 
@@ -38,7 +45,7 @@ const GameBoard = (props: IStateUserOptions) => {
     <CardDeckContainer>
       {
         cardDeck &&
-        cardDeck.map((value, index) => positionCardOnDeck(index))
+        cardDeck.map((value, index) => positionCardOnDeck(index, value))
       }
     </CardDeckContainer>
   )

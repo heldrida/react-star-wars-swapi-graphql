@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { StarIcon } from '../../Icons'
-import { IPropsTheme, TPropFlag, IPropsCard } from '../../Types'
+import { IPropsTheme, TPropFlag, IPropsCard, IPerson, IStarships } from '../../Types'
 
 const List = styled.ul`
   padding: 0;
@@ -14,6 +14,7 @@ const ListItem = styled.li<TPropFlag>`
   padding: 0.6rem 1rem;
   margin: 0;
   font-weight: ${(props: TPropFlag) => (props.light ? 100 : "bold")};
+  font-size: 0.8rem;
 `
 
 const StyledStarIcon = styled(StarIcon)`
@@ -101,8 +102,24 @@ const SceneCardBack = styled.div`
   ${cardFace}
 `
 
+const PersonMetadata = ({name, height, gender}: IPerson) => (
+  <>
+    <ListItem light="true">{name}</ListItem>
+    <ListItem light="true">{height}</ListItem>
+    <ListItem light="true">{gender}</ListItem>
+  </>
+)
+
+const StarShipMetadata = ({name, length, model}: IStarships) => (
+  <>
+    <ListItem light="true">{name}</ListItem>
+    <ListItem light="true">{length}</ListItem>
+    <ListItem light="true">{model}</ListItem>
+  </>
+)
+
 const GameCard = (props: IPropsCard) => {
-  const { translateXY, rotate, showFace, zIndex, visibilityDelay } = props  
+  const { translateXY, rotate, showFace, zIndex, visibilityDelay, metadata } = props  
   const [visible, setVisible] = useState(false)
   let t = setTimeout(() => {
     setVisible(true)
@@ -116,8 +133,12 @@ const GameCard = (props: IPropsCard) => {
             <ListItem>
               <StyledStarIcon />
             </ListItem>
-            <ListItem>Mateo Asato</ListItem>
-            <ListItem light="true">1.57m</ListItem>
+            {
+              ('model' in metadata &&
+              <StarShipMetadata {...metadata} />) ||
+              ('height' in metadata &&
+              <PersonMetadata {...metadata} />)
+            }
           </List>
         </SceneCardFront>
         <SceneCardBack />
