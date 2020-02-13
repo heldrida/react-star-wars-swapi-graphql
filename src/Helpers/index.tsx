@@ -1,3 +1,6 @@
+import { CARD_STANDARD_DECK_SIZE } from '../Constants'
+import { TDeckCard } from '../Types'
+
 const configurationCsvToArr = (csv: string): number[] => csv.split(',').map(v => +v)
 
 const playerNameFromListIndex = (index: number): string => {
@@ -5,8 +8,8 @@ const playerNameFromListIndex = (index: number): string => {
   return `${playerNamePrefix}${index + 1}`
 }
 
-const getSizedChunkFromList = (fromIndex: number, desiredChunkSize: number, list: number[]): number[] => {
-  let computedList = []
+const getSizedChunkFromList = (fromIndex: number, desiredChunkSize: number, list: TDeckCard[]): TDeckCard[] => {
+  let computedList: TDeckCard[] = []
   const listSize = list.length
   const diff = listSize - fromIndex
   if ((desiredChunkSize >= fromIndex) && listSize >= desiredChunkSize) {
@@ -20,8 +23,14 @@ const getSizedChunkFromList = (fromIndex: number, desiredChunkSize: number, list
   return computedList
 }
 
+const getRandomStandardSizeCardDeckFromList = (list: TDeckCard[]) => {
+  const randomIndex = Math.random() * CARD_STANDARD_DECK_SIZE
+  getSizedChunkFromList(randomIndex, CARD_STANDARD_DECK_SIZE, list)
+}
+
 export {
   configurationCsvToArr,
   playerNameFromListIndex,
-  getSizedChunkFromList
+  getSizedChunkFromList,
+  getRandomStandardSizeCardDeckFromList
 }
