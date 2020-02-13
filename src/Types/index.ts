@@ -81,6 +81,8 @@ interface IStarships {
   __typename?: string
 }
 
+type TDeckCard = IPerson | IStarships
+
 interface IPropsPlayerNameSetter {
   onChangeHandler: TInputOnChangeCallback
   numberOfPlayers: TNumberOfPlayers
@@ -137,6 +139,7 @@ export {
   TPropFlag,
   IPerson,
   IStarships,
+  TDeckCard,
   TThemeConf,
   TSelectOnChangeCallback,
   IPropsCard
