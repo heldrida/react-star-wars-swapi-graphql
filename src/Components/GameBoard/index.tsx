@@ -4,6 +4,7 @@ import { IStateUserOptions } from '../../Types'
 import { starWarsAPI } from '../../Queries'
 import GameCard from '../GameCard'
 import styled from 'styled-components'
+import { getRandomStandardSizeCardDeckFromList } from '../../Helpers'
 
 const CardDeckContainer = styled.div`
   position: relative;
@@ -13,15 +14,18 @@ const GameBoard = (props: IStateUserOptions) => {
   const { playerMode } = props
   const { data: queryResponseData } = useQuery(starWarsAPI[playerMode])
 
+  console.log('queryResponseData: ', queryResponseData)
+  // getRandomStandardSizeCardDeckFromList()
+
   const positionCardOnDeck = (index: number) => {
     const posX: string = (index + 2) + 'px';
     const posY: string = (index + 2) + 'px';
     const translateXY = `${posX}, ${posY}`
     const showFace = true
     const zIndex = 1
-    const rotate = Math.random() * 0.8 // humanize right :)
+    const rotate = Math.random() * 0.8 // humanize it, right? :)
     const visibilityDelay = index * 60
-    return <GameCard translateXY={translateXY} rotate={rotate} showFace={showFace} visibilityDelay={visibilityDelay} zIndex={zIndex} />
+    return <GameCard key={index} translateXY={translateXY} rotate={rotate} showFace={showFace} visibilityDelay={visibilityDelay} zIndex={zIndex} />
   }
 
   useEffect(() => {

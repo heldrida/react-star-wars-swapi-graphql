@@ -1,5 +1,6 @@
-import { playerNameFromListIndex, getSizedChunkFromList } from './index'
+import { playerNameFromListIndex, getSizedChunkFromList, getPlayerModeListDataFromQueryResult } from './index'
 import { TDeckCard } from '../Types'
+import { PLAYER_CARD_TYPE } from '../Constants'
 
 describe('playerNameFromListIndex', () => {
   it('should generate a player name', () => {
@@ -87,4 +88,21 @@ describe('getSizedChunkFromList', () => {
     expect(getSizedChunkFromList(1, 12, list)).toEqual([])
     expect(getSizedChunkFromList(100, 1000, list)).toEqual([])
   })
+})
+
+describe('should get the list data from the query response by the selected player mode', () => {
+  const mock = [...Array(10)]
+  const responseFactory = (name: string) => {
+    return  {
+      [`all${name[0].toUpperCase() + name.slice(1)}`]: {
+        [name]: mock
+      }
+    }
+  }
+  const starshipsResponseData = responseFactory('starships')
+  const peopleResponseData = responseFactory('people')
+  const computedStarshipsList = getPlayerModeListDataFromQueryResult(PLAYER_CARD_TYPE.starships, starshipsResponseData)
+  const computedPeopleList = getPlayerModeListDataFromQueryResult(PLAYER_CARD_TYPE.people, peopleResponseData)
+  expect(computedStarshipsList).toEqual(mock)
+  expect(computedPeopleList).toEqual(mock)
 })

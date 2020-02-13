@@ -1,5 +1,5 @@
-import { CARD_STANDARD_DECK_SIZE } from '../Constants'
-import { TDeckCard } from '../Types'
+import { CARD_STANDARD_DECK_SIZE, PLAYER_MODE_OPTIONS, PLAYER_CARD_TYPE } from '../Constants'
+import { TDeckCard, TPlayerMode } from '../Types'
 
 const configurationCsvToArr = (csv: string): number[] => csv.split(',').map(v => +v)
 
@@ -28,9 +28,20 @@ const getRandomStandardSizeCardDeckFromList = (list: TDeckCard[]) => {
   getSizedChunkFromList(randomIndex, CARD_STANDARD_DECK_SIZE, list)
 }
 
+const getPlayerModeListDataFromQueryResult = (playerMode: TPlayerMode, queryResponseData: any) => {
+  let list
+  if (playerMode === PLAYER_CARD_TYPE.people) {
+    list = queryResponseData?.allPeople?.people
+  } else if (playerMode === PLAYER_CARD_TYPE.starships) {
+    list = queryResponseData?.allStarships?.starships
+  }
+  return list
+}
+
 export {
   configurationCsvToArr,
   playerNameFromListIndex,
   getSizedChunkFromList,
-  getRandomStandardSizeCardDeckFromList
+  getRandomStandardSizeCardDeckFromList,
+  getPlayerModeListDataFromQueryResult
 }

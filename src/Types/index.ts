@@ -1,6 +1,6 @@
 import { DocumentNode } from 'apollo-boost'
 
-type TPLayerMode = string
+type TPlayerMode = string
 
 type TPlayerName = string
 
@@ -24,7 +24,7 @@ interface IPlayerNames {
 }
 
 interface IStateUserOptions {
-  readonly playerMode: TPLayerMode
+  readonly playerMode: TPlayerMode
   readonly playerNames: IPlayerNames
   readonly numberOfPlayers: TNumberOfPlayers
   readonly play: boolean
@@ -43,7 +43,7 @@ interface ISetNumberOfPlayers extends IAction {
 }
 
 interface ISetPlayerMode extends IAction {
-  playerMode: TPLayerMode
+  playerMode: TPlayerMode
 }
 
 interface ISetPlayerName extends IAction {
@@ -56,7 +56,7 @@ type TPlayerCardType = string
 
 interface IPlayerModeSelectProps {
   onChangeHandler: TSelectOnChangeCallback,
-  playerMode: TPLayerMode
+  playerMode: TPlayerMode
 }
 
 interface INumberOfPlayerSelectProps {
@@ -142,5 +142,6 @@ export {
   TDeckCard,
   TThemeConf,
   TSelectOnChangeCallback,
-  IPropsCard
+  IPropsCard,
+  TPlayerMode
 }
