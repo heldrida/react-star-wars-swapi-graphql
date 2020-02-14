@@ -3,7 +3,6 @@ import { useQuery } from '@apollo/react-hooks'
 import { IStateUserOptions, TDeckCard, IPickCardIndexed, TPropFindWinner } from '../../Types'
 import { starWarsAPI } from '../../Queries'
 import GameCard from '../GameCard'
-import styled from 'styled-components'
 import { getPlayerModeListDataFromQueryResult,
          getCardDeck,
          getUniqueRandomIndexes,
@@ -13,125 +12,18 @@ import { getPlayerModeListDataFromQueryResult,
 import CtaButton from '../CtaButton'
 import config from '../../config'
 import { Chewbacca } from '../../Icons'
-import posed, { PoseGroup } from 'react-pose'
-
-const CardDeckContainer = styled.div`
-  position: relative;
-  height: 35rem;
-`
-
-const CtaContainer = styled.div`
-  font-family: "Nunito", sans-serif;
-
-  & > p {
-    margin-right: 2rem;
-    display: inline;
-    color: rgba(0, 0, 0, 0.3);
-  }
-`
-
-const ChewbaccaContainer = styled.div`
-  position: relative;
-  text-align: right;
-
-  & > svg {
-    width: 150px;
-  }
-`
-
-const SpeechBubble = styled.div`
-  font-size: 3rem;
-  position: relative;
-  display: inline-block;
-  padding: 1.5rem;
-  background: #00cc99;
-  color: #f6f6f6;
-  animation: bounce-in 1s 1;
-  transform-origin: left bottom;
-  position: absolute;
-  top: -4rem;
-  right: 8rem;
-  z-index: 30;
-  font-weight: bold;
-
-  > span {
-    font-size: 1.5rem;
-    font-family: "Nunito", sans-serif;
-  }
-
-  &:after {
-    content: '';
-    top: 88%;
-    right: 0;
-    position: absolute;
-    border: 1.5rem solid;
-    border-color: #00cc99 #00cc99 transparent transparent;
-  }
-`
-
-const AnimationContainer = posed.div({
-  enter: {
-    transition: {
-      y: { duration: 400, ease: 'easeInOut' }
-    },
-    y: 0,
-    opacity: 1,
-    delay: 320,
-  },
-  exit: {
-    transition: { duration: 160 },
-    opacity: 0.2,
-    y: 40,
-  }
-})
-
-const CardPicker = ({ children, targetCardIndexes }: { children?: any, targetCardIndexes: IPickCardIndexed[] }) => {
-  return (
-    <>
-      {
-        React.Children.map(children || null, (child, index) => {
-          const targetIndex = (targetCardIndexes &&
-                              targetCardIndexes.findIndex(pickData => pickData.index === index))
-          const translateXY = targetCardIndexes[targetIndex]?.translateXY
-          const rotate = targetCardIndexes[targetIndex]?.rotate
-          const showFace = targetCardIndexes[targetIndex]?.showFace
-          const playerName = targetCardIndexes[targetIndex]?.playerName
-          const propsData = {
-            ...child.props,
-            translateXY,
-            showFace,
-            rotate,
-            playerName
-          }
-          if (targetIndex === -1) {
-            return <child.type {...child.props} key={index} />
-          } else {
-            return <child.type
-                    key={index}
-                    {
-                      ...propsData
-                    }
-                   />
-          }
-        })
-      }
-    </>
-  )
-}
+import { PoseGroup } from 'react-pose'
+import {
+  SpeechBubble,
+  ChewbaccaContainer,
+  CtaContainer,
+  CardDeckContainer
+} from './styled'
+import { AnimationContainer } from './anime'
+import CardPicker from './CardPicker'
+import { useLocalStorage } from '../../CustomHooks'
 
 const resultsPropertyName = `${config.application.name}_result_history`
-const useLocalStorage = (key: string, initialValue: [] = []) => {
-  const [value, setValue] = useState(() => {
-    const item = window.localStorage.getItem(key)
-    return item ? JSON.parse(item) : initialValue
-  })
-
-  useEffect(() => {
-    window.localStorage.setItem(key, JSON.stringify(value))
-  }, [key, value]) 
-
-  return [value, setValue]
-}
 
 const GameBoard = (props: IStateUserOptions) => {
   const [cardDeck, setCardDeck] = useState<TDeckCard[] | undefined>(undefined)  
@@ -166,13 +58,6 @@ const GameBoard = (props: IStateUserOptions) => {
                      zIndex={zIndex} />
   }
 
-  useEffect(() => {
-    const haystack = getPlayerModeListDataFromQueryResult(playerMode, queryResponseData)
-    const cardDeck = haystack &&
-                     getCardDeck(haystack)
-    cardDeck && setCardDeck(cardDeck)
-  }, [queryResponseData, playerMode, setCardDeck])
-
   const onClickHandler = useCallback(() => {
     setIsCtaVisible(false)
     const randomIndexes = cardDeck &&
@@ -197,25 +82,6 @@ const GameBoard = (props: IStateUserOptions) => {
       clearTimeout(t)
     }, 1200)
   }, [setTargetCardIndexes, numberOfPlayers, cardDeck, props])
-
-  useEffect(() => {
-    if (targetCardIndexes.length === 0) return
-    const computedTargetCardIndexes: IPickCardIndexed[] | undefined = targetCardIndexes.map(data => {
-                                                    return ({
-                                                      ...data,
-                                                      showFace: turnPickedCards
-                                                    })
-                                                  })
-    computedTargetCardIndexes &&
-    setTargetCardIndexes(computedTargetCardIndexes)
-
-    targetCardIndexes &&
-    targetCardIndexes.length > 0 &&
-    cardDeck &&
-    findWinner(targetCardIndexes)
-  // Obs: we just want to watch turnPickedCards, ignore `targetCardIndexes`
-  // eslint-disable-next-line
-  }, [turnPickedCards])
 
   const gameResultHandler = useCallback((targetCard: TPropFindWinner) => {
     const prevData = (window.localStorage[resultsPropertyName] && JSON.parse(window.localStorage[resultsPropertyName])) || []
@@ -242,12 +108,20 @@ const GameBoard = (props: IStateUserOptions) => {
       }
       return result
     })
-    console.log('[debug] winnerPlayerData: ', winnerPlayerData)
+
     setWinner(winnerPlayerData)
 
     winnerPlayerData &&
     gameResultHandler(winnerPlayerData)
   }, [gameResultHandler])
+
+
+  useEffect(() => {
+    const haystack = getPlayerModeListDataFromQueryResult(playerMode, queryResponseData)
+    const cardDeck = haystack &&
+                     getCardDeck(haystack)
+    cardDeck && setCardDeck(cardDeck)
+  }, [queryResponseData, playerMode, setCardDeck])
 
   useEffect(() => {
     if (!winner) return
@@ -261,6 +135,21 @@ const GameBoard = (props: IStateUserOptions) => {
       setIsCtaVisible(true)
     }, 3000)
   }, [winner, cardDeck])
+
+  useEffect(() => {
+    if (targetCardIndexes.length === 0) return
+    const computedTargetCardIndexes: IPickCardIndexed[] | undefined = targetCardIndexes.map(data => {
+                                                    return ({
+                                                      ...data,
+                                                      showFace: turnPickedCards
+                                                    })
+                                                  })
+    computedTargetCardIndexes && setTargetCardIndexes(computedTargetCardIndexes)
+
+    targetCardIndexes && findWinner(targetCardIndexes)
+  // Obs: we just want to watch turnPickedCards, ignore `targetCardIndexes`
+  // eslint-disable-next-line
+  }, [turnPickedCards])
 
   return (
     <>

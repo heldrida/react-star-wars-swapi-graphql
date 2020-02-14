@@ -2,24 +2,9 @@ import React, { useState } from 'react'
 import GameBoard from '../GameBoard'
 import { useUserOptionsState } from '../../Context'
 import UserOptionsMenu from '../UserOptionsMenu'
-import posed, { PoseGroup } from 'react-pose'
+import { PoseGroup } from 'react-pose'
 import { IStateUserOptions } from '../../Types'
-
-const AnimationContainer = posed.div({
-  enter: {
-    transition: {
-      y: { duration: 400, ease: 'easeInOut' }
-    },
-    y: 0,
-    opacity: 1,
-    delay: 320,
-  },
-  exit: {
-    transition: { duration: 160 },
-    opacity: 0.2,
-    y: 40,
-  }
-})
+import { AnimationContainer } from './anime'
 
 const Game = () => {
   const userOptionsState: IStateUserOptions = useUserOptionsState()
