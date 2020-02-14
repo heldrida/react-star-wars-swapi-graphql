@@ -8,10 +8,22 @@ import { getPlayerModeListDataFromQueryResult,
          getCardDeck,
          getUniqueRandomIndexes,
          humanizeCardPlacementOnTableByFactor } from '../../Helpers'
+import CtaButton from '../CtaButton'
+import { IPropsTheme } from '../../Types'
 
 const CardDeckContainer = styled.div`
   position: relative;
-  height: 40rem;
+  height: 35rem;
+`
+
+const CtaContainer = styled.div`
+  font-family: "Nunito", sans-serif;
+
+  & > p {
+    margin-right: 2rem;
+    display: inline;
+    color: rgba(0, 0, 0, 0.3);
+  }
 `
 
 const CardPicker = ({ children, targetCardIndexes }: { children?: any, targetCardIndexes: IPickCardIndexed[] }) => {
@@ -86,7 +98,7 @@ const GameBoard = (props: IStateUserOptions) => {
                                                   randomIndexes.map((index, i) => {
                                                     return ({
                                                       index,
-                                                      translateXY: `${i * 12}rem, 20rem`,
+                                                      translateXY: `${i * 12}rem, 18rem`,
                                                       rotate: humanizeCardPlacementOnTableByFactor(index, 4.2),
                                                       showFace: true
                                                     })
@@ -121,7 +133,10 @@ const GameBoard = (props: IStateUserOptions) => {
           }
         </CardPicker>
       </CardDeckContainer>
-      <button onClick={onClickHandler}>Pick random cards!</button>
+      <CtaContainer>
+        <p>When ready to play, press the button!</p>
+        <CtaButton onClick={onClickHandler}>Go!</CtaButton>
+      </CtaContainer>
     </>
   )
 }

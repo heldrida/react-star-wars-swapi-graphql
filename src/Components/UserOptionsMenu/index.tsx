@@ -16,6 +16,7 @@ import styled, { css, keyframes } from "styled-components"
 import { boxShadowStyle, fontLabelStyle, fontTitlesStyle, lightTextShadow } from '../../sharedStyles'
 import { useUserOptionsSetter } from '../../Context'
 import { LightSaber, BarShort, StarIcon as Star, AngelFire } from '../../Icons'
+import CtaButton from '../CtaButton'
 
 const elementSpacing = css`
   padding-bottom: 1rem;
@@ -214,26 +215,9 @@ const AngelFireContainer = styled.div`
   }
 `
 
-const StartButton = styled.button`
-  /* background: ${(props: IPropsTheme) => props.theme.skyColor}; */
-  background: #28adfd;
-  line-height: 4rem;
-  font-size: 1rem;
-  color: #fff;
-  border-radius: 8px;
-  padding: 0 2rem;
+const CtaButtonContainer = styled.div`
+  padding: 0;
   margin: 2rem 0;
-  border: none;
-  cursor: pointer;
-  box-shadow: 2px 6px 22px ${(props: IPropsTheme) => props.theme.color2};
-  transition: opacity 0.3s;
-  font-family: "Nunito", sans-serif;  
-  /* ${fontTitlesStyle}
-  ${lightTextShadow} */
-
-  &:hover {
-    opacity: 0.68;
-  }
 `
 
 const Box = styled.div`
@@ -359,7 +343,9 @@ const UserOptionsMenu: React.FC = () => {
         <TitleBox>{'People or Starship cards?'}</TitleBox>
         <PlayerModeSelect onChangeHandler={onPlayerModeSelect} playerMode={state.playerMode} />
       </ItemBlock>
-      <StartButton onClick={onCompleteHandler}>Let's play!</StartButton>
+      <CtaButtonContainer>
+        <CtaButton onClick={onCompleteHandler}>Let's play!</CtaButton>
+      </CtaButtonContainer>
       {
         (state.playerMode === PLAYER_CARD_TYPE.people &&
         <LightSaberContainer>
