@@ -12,6 +12,7 @@ import { getPlayerModeListDataFromQueryResult,
          currentTimeFormatted } from '../../Helpers'
 import CtaButton from '../CtaButton'
 import config from '../../config'
+import { Chewbacca } from '../../Icons'
 
 const CardDeckContainer = styled.div`
   position: relative;
@@ -25,6 +26,45 @@ const CtaContainer = styled.div`
     margin-right: 2rem;
     display: inline;
     color: rgba(0, 0, 0, 0.3);
+  }
+`
+
+const ChewbaccaContainer = styled.div`
+  position: relative;
+  text-align: right;
+
+  & > svg {
+    width: 150px;
+  }
+`
+
+const SpeechBubble = styled.div`
+  font-size: 3rem;
+  position: relative;
+  display: inline-block;
+  padding: 1.5rem;
+  background: #00cc99;
+  color: #f6f6f6;
+  animation: bounce-in 1s 1;
+  transform-origin: left bottom;
+  position: absolute;
+  top: -4rem;
+  right: 8rem;
+  z-index: 30;
+  font-weight: bold;
+
+  > span {
+    font-size: 1.5rem;
+    font-family: "Nunito", sans-serif;
+  }
+
+  &:after {
+    content: '';
+    top: 88%;
+    right: 0;
+    position: absolute;
+    border: 1.5rem solid;
+    border-color: #00cc99 #00cc99 transparent transparent;
   }
 `
 
@@ -80,7 +120,9 @@ const GameBoard = (props: IStateUserOptions) => {
   const [cardDeck, setCardDeck] = useState<TDeckCard[] | undefined>(undefined)  
   const [targetCardIndexes, setTargetCardIndexes] = useState<IPickCardIndexed[]>([])
   const [turnPickedCards, setTurnPickedCards] = useState<boolean>(true)
+  const [announceWinner, setAnnounceWinner] = useState<string | undefined>(undefined)
   const [result, setResult] = useLocalStorage(resultsPropertyName)
+  const [winner, setWinner] = useState<IPickCardIndexed | undefined>(undefined)
   const { playerMode, numberOfPlayers } = props
   const { data: queryResponseData } = useQuery(starWarsAPI[playerMode])
 
@@ -179,9 +221,18 @@ const GameBoard = (props: IStateUserOptions) => {
       return result
     })
     console.log('[debug] winnerPlayerData: ', winnerPlayerData)
+    setWinner(winnerPlayerData)
+
     winnerPlayerData &&
     gameResultHandler(winnerPlayerData)
   }, [gameResultHandler])
+
+  useEffect(() => {
+    setAnnounceWinner(winner?.playerName)
+    setTimeout(() => {
+      setAnnounceWinner(undefined)
+    }, 5000)
+  }, [winner])
 
   return (
     <>
@@ -193,10 +244,19 @@ const GameBoard = (props: IStateUserOptions) => {
           }
         </CardPicker>
       </CardDeckContainer>
-      <CtaContainer>
-        <p>When ready to play, press the button!</p>
-        <CtaButton onClick={onClickHandler}>Go!</CtaButton>
+      {
+        (announceWinner &&
+        <ChewbaccaContainer>
+          <SpeechBubble>
+            <span>Wuarm! {announceWinner} is the winner!</span>
+          </SpeechBubble>
+          <Chewbacca />
+        </ChewbaccaContainer>) ||
+        <CtaContainer>
+          <p>When ready to play, press the button!</p>
+          <CtaButton onClick={onClickHandler}>Go!</CtaButton>
       </CtaContainer>
+      }
     </>
   )
 }
