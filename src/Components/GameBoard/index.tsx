@@ -22,8 +22,9 @@ import {
 import { AnimationContainer } from './anime'
 import CardPicker from './CardPicker'
 import { useLocalStorage } from '../../CustomHooks'
+import { getResultsPropertyName } from '../../Helpers'
 
-const resultsPropertyName = `${config.application.name}_result_history`
+const resultsPropertyName = getResultsPropertyName()
 
 const GameBoard = (props: IStateUserOptions) => {
   const [cardDeck, setCardDeck] = useState<TDeckCard[] | undefined>(undefined)  

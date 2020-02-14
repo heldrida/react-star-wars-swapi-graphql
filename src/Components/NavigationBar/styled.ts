@@ -19,6 +19,8 @@ const Navigation = styled.nav`
   /* linear-gradient(to right, #CEB8FF, #C8B6C5) */
   /* linear-gradient(to right, #A899C8, #C8B6C5) */
   height: auto;
+  z-index: 9999;
+  position: relative;
 
   ${boxShadowStyle}
 `

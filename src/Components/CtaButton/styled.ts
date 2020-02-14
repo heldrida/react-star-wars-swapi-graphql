@@ -1,9 +1,8 @@
 import styled from "styled-components"
-import { IPropsTheme } from '../../Types'
+import { TPropFlag } from '../../Types'
 
-const CtaButton = styled.button`
-  /* background: ${(props: IPropsTheme) => props.theme.skyColor}; */
-  background: #28adfd;
+const CtaButton = styled.button<TPropFlag>`
+  background: ${(props: TPropFlag) => props.bg || '#28adfd'};
   line-height: 4rem;
   font-size: 1rem;
   color: #fff;
@@ -12,7 +11,7 @@ const CtaButton = styled.button`
   margin: 2rem 0;
   border: none;
   cursor: pointer;
-  box-shadow: 2px 6px 22px ${(props: IPropsTheme) => props.theme.color2};
+  box-shadow: 2px 6px 22px ${(props: TPropFlag) => props.theme.color2};
   transition: opacity 0.3s;
   font-family: "Nunito", sans-serif;  
 

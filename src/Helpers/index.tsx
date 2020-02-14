@@ -1,5 +1,6 @@
 import { CARD_STANDARD_DECK_SIZE, PLAYER_CARD_TYPE } from '../Constants'
 import { TDeckCard, TPlayerMode, IQueryResponseData, IStateUserOptions } from '../Types'
+import AppConfiguration from '../config'
 
 const configurationCsvToArr = (csv: string): number[] => csv.split(',').map(v => +v)
 
@@ -84,6 +85,8 @@ const currentTimeFormatted = () => {
   return formatted
 }
 
+const getResultsPropertyName = () => `${AppConfiguration.application.name}_result_history`
+
 export {
   configurationCsvToArr,
   playerNameFromListIndex,
@@ -95,5 +98,6 @@ export {
   getUniqueRandomIndexes,
   humanizeCardPlacementOnTableByFactor,
   getPlayerNameFromUserOptions,
-  currentTimeFormatted
+  currentTimeFormatted,
+  getResultsPropertyName
 }

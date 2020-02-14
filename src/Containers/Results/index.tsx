@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
-import AppConfiguration from '../../config'
+import { getResultsPropertyName } from '../../Helpers'
+import CtaButton from '../../Components/CtaButton'
+import { Link } from 'react-router-dom'
+import {
+  TextFadeInfinityContainer,
+  Stripe,
+  WinnerContainer,
+  NoResultsYet
+} from './styled'
 
 const Results = () => {
-  // TODO: move as helper fn, and reuse it everywhere
-  const resultsPropertyName = `${AppConfiguration.application.name}_result_history`
+  const resultsPropertyName = getResultsPropertyName()
   const data = window.localStorage.hasOwnProperty(resultsPropertyName) &&
               JSON.parse(window.localStorage[resultsPropertyName])
-  console.log('[debug] Results: data: ', data)
   const reversed = Array.isArray(data) && [...data].reverse()
   const [resultsData, setResultsData] = useState(reversed)
   const clearResultHistory = () => {
@@ -19,22 +25,28 @@ const Results = () => {
     resultsData.length > 0 &&
     (
       <div>
-        <button onClick={clearResultHistory}>Clear results history!</button>
-        <ul>
-          {
+        <CtaButton bg={'#fd6d6d'} onClick={clearResultHistory}>Clear results history</CtaButton>
+        <TextFadeInfinityContainer>
+          <Stripe>
+            <div>
+              <p>The Episode VI</p>
+              <h1>Top Trumps</h1>
+            </div>
+            {
             Array.isArray(resultsData) &&
             resultsData.map((v: any, index: number) => (
-              <li key={index}>
-                <p>{`Player name: ${v.playerName}`}</p>
-                <p>{`Date: ${v.date}`}</p>
-                <p>{`Time: ${v.time}`}</p>
-              </li>
+              <WinnerContainer key={index}>
+                <p>{`${v.playerName} at ${v.time} of ${v.date}`}</p>
+              </WinnerContainer>
             ))
           }
-        </ul>
+          </Stripe>
+        </TextFadeInfinityContainer>
       </div>
     )) ||
-    <p>{'results do not exist yet!'}</p>
+    <NoResultsYet>
+      <Link to="/game">Oops! Got no results yet! Click here to play?</Link>
+    </NoResultsYet>
   )
 }
 

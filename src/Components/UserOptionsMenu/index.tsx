@@ -60,10 +60,7 @@ const UserOptionsMenu: React.FC = () => {
       <CtaButtonContainer>
         <CtaButton onClick={onCompleteHandler}>Let's play!</CtaButton>
       </CtaButtonContainer>
-      {
-        (state.playerMode === PLAYER_CARD_TYPE.people &&
-        <Anime playerMode={state.playerMode} />)
-      }
+      <Anime playerMode={state.playerMode} />
     </Box>
   )
 }
