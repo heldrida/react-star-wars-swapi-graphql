@@ -1,8 +1,8 @@
-import React, { useEffect, useReducer, useCallback } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import AppConfiguration from '../../config'
 import { NumberOfPlayerSelect, PlayerModeSelect, PlayerNameSetter } from '../../Components'
 import { TSelectOnChangeCallback, TInputOnChangeCallback } from '../../Types'
-import { ACTIONS, PLAYER_MODE_OPTIONS } from '../../Constants'
+import { ACTIONS } from '../../Constants'
 import {
   IStateUserOptions,
   IReducerUserOptions,
@@ -81,18 +81,6 @@ const moveForward = keyframes`
   } */
   100% {
     transform: translateX(0.44rem);
-  }
-`;
-
-const upDown = keyframes`
-  0% {
-    transform: translateY(0);
-  }
-  /* 20% {
-    transform: translateX(0.5rem);
-  } */
-  100% {
-    transform: translateY(0.44rem);
   }
 `;
 

@@ -72,7 +72,6 @@ const GameBoard = (props: IStateUserOptions) => {
     const haystack = getPlayerModeListDataFromQueryResult(playerMode, queryResponseData)
     const cardDeck = haystack &&
                      getCardDeck(haystack)
-    console.log('[debug] cardDeck: ', cardDeck)
     cardDeck && setCardDeck(cardDeck)
   }, [queryResponseData, playerMode, setCardDeck])
 

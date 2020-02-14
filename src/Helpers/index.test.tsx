@@ -119,10 +119,10 @@ describe('should get the list data from the query response by the selected playe
 })
 
 describe('should get a random list from the query response', () => {
-  const peopleResponseData = [...Array(86)].fill(jessie)
+  const peopleResponseData = [...Array(86)].fill(nick)
   const computed = getRandomStandardSizeCardDeckFromList(peopleResponseData)
   expect(computed).toBeTruthy()
-  expect(computed[Math.floor(Math.random() * computed.length)]).toEqual(jessie)
+  expect(computed[Math.floor(Math.random() * computed.length)]).toEqual(nick)
   expect(computed.length).toBe(CARD_STANDARD_DECK_SIZE)
 })
 
