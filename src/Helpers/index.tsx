@@ -46,11 +46,17 @@ const getPlayerModeListDataFromQueryResult = (playerMode: TPlayerMode, queryResp
   return list
 }
 
+const convertCmToMeters = (value: string | number): number => {
+  const computedValue: number = (!isNaN(+value) && Number(value) / 100) || 0
+  return +computedValue.toFixed(2)
+}
+
 export {
   configurationCsvToArr,
   playerNameFromListIndex,
   getSizedChunkFromList,
   getRandomStandardSizeCardDeckFromList,
   getPlayerModeListDataFromQueryResult,
-  getCardDeck
+  getCardDeck,
+  convertCmToMeters
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { StarIcon } from '../../Icons'
 import { IPropsTheme, TPropFlag, IPropsCard, IPerson, IStarships } from '../../Types'
+import { convertCmToMeters } from '../../Helpers'
 
 const List = styled.ul`
   padding: 0;
@@ -11,10 +12,11 @@ const List = styled.ul`
 const ListItem = styled.li<TPropFlag>`
   list-style: none;
   text-align: left;
-  padding: 0.6rem 1rem;
+  padding: 0.4rem 1rem;
   margin: 0;
   font-weight: ${(props: TPropFlag) => (props.light ? 100 : "bold")};
   font-size: 0.8rem;
+  overflow: hidden;
 `
 
 const StyledStarIcon = styled(StarIcon)`
@@ -105,7 +107,7 @@ const SceneCardBack = styled.div`
 const PersonMetadata = ({name, height, gender}: IPerson) => (
   <>
     <ListItem light="true">{name}</ListItem>
-    <ListItem light="true">{height}</ListItem>
+    <ListItem light="true">{`${convertCmToMeters(height)}cm`}</ListItem>
     <ListItem light="true">{gender}</ListItem>
   </>
 )
