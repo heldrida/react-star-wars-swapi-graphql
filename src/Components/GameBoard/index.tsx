@@ -11,6 +11,7 @@ import { getPlayerModeListDataFromQueryResult,
 
 const CardDeckContainer = styled.div`
   position: relative;
+  height: 40rem;
 `
 
 const CardPicker = ({ children, targetCardIndexes }: { children?: any, targetCardIndexes: IPickCardIndexed[] }) => {
@@ -22,10 +23,11 @@ const CardPicker = ({ children, targetCardIndexes }: { children?: any, targetCar
                               targetCardIndexes.findIndex(pickData => pickData.index === index))
           const translateXY = targetCardIndexes[targetIndex]?.translateXY
           const rotate = targetCardIndexes[targetIndex]?.rotate
+          const showFace = targetCardIndexes[targetIndex]?.showFace
           const propsData = {
             ...child.props,
             translateXY,
-            showFace: false,
+            showFace,
             rotate
           }
           if (targetIndex === -1) {
@@ -47,6 +49,7 @@ const CardPicker = ({ children, targetCardIndexes }: { children?: any, targetCar
 const GameBoard = (props: IStateUserOptions) => {
   const [cardDeck, setCardDeck] = useState<TDeckCard[] | undefined>(undefined)  
   const [targetCardIndexes, setTargetCardIndexes] = useState<IPickCardIndexed[]>([])
+  const [turnPickedCards, setTurnPickedCards] = useState<boolean>(true)
   const { playerMode, numberOfPlayers } = props
   const { data: queryResponseData } = useQuery(starWarsAPI[playerMode])
 
@@ -76,30 +79,50 @@ const GameBoard = (props: IStateUserOptions) => {
   }, [queryResponseData, playerMode, setCardDeck])
 
   const onClickHandler = React.useCallback(() => {
+    setTurnPickedCards(true)
     const randomIndexes = cardDeck &&
                           getUniqueRandomIndexes(numberOfPlayers, cardDeck.length)
-    const targetCardIndexes: IPickCardIndexed[] | undefined = randomIndexes &&
+    const computedTargetCardIndexes: IPickCardIndexed[] | undefined = randomIndexes &&
                                                   randomIndexes.map((index, i) => {
                                                     return ({
                                                       index,
                                                       translateXY: `${i * 12}rem, 20rem`,
-                                                      rotate: humanizeCardPlacementOnTableByFactor(index, 4.2)
+                                                      rotate: humanizeCardPlacementOnTableByFactor(index, 4.2),
+                                                      showFace: true
                                                     })
                                                   })
-    targetCardIndexes &&
-    setTargetCardIndexes(targetCardIndexes)
+    computedTargetCardIndexes &&
+    setTargetCardIndexes(computedTargetCardIndexes)
+
+    let t = setTimeout(() => {
+      setTurnPickedCards(false)
+      clearTimeout(t)
+    }, 1200)
   }, [setTargetCardIndexes, numberOfPlayers, cardDeck])
 
+  useEffect(() => {
+    const computedTargetCardIndexes: IPickCardIndexed[] | undefined = targetCardIndexes.map(data => {
+                                                    return ({
+                                                      ...data,
+                                                      showFace: turnPickedCards
+                                                    })
+                                                  })
+    computedTargetCardIndexes &&
+    setTargetCardIndexes(computedTargetCardIndexes)
+  }, [turnPickedCards])
+
   return (
-    <CardDeckContainer>
-      <CardPicker targetCardIndexes={targetCardIndexes}>
-        {
-          cardDeck &&
-          cardDeck.map((value, index) => positionCardOnDeck(index, value))
-        }
-      </CardPicker>
+    <>
+      <CardDeckContainer>
+        <CardPicker targetCardIndexes={targetCardIndexes}>
+          {
+            cardDeck &&
+            cardDeck.map((value, index) => positionCardOnDeck(index, value))
+          }
+        </CardPicker>
+      </CardDeckContainer>
       <button onClick={onClickHandler}>Pick random cards!</button>
-    </CardDeckContainer>
+    </>
   )
 }
 

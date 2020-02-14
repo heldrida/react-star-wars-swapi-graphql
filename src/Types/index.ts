@@ -131,7 +131,8 @@ interface IPropsCard {
 interface IPickCardIndexed {
   index: number,
   translateXY: string,
-  rotate: number
+  rotate: number,
+  showFace: boolean
 }
 
 
