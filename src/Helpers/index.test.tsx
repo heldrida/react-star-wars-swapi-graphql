@@ -1,4 +1,10 @@
-import { playerNameFromListIndex, getSizedChunkFromList, getPlayerModeListDataFromQueryResult, getRandomStandardSizeCardDeckFromList } from './index'
+import {
+        playerNameFromListIndex,
+        getSizedChunkFromList,
+        getPlayerModeListDataFromQueryResult,
+        getRandomStandardSizeCardDeckFromList,
+        getUniqueRandomIndexes
+      } from './index'
 import { TDeckCard } from '../Types'
 import { PLAYER_CARD_TYPE, CARD_STANDARD_DECK_SIZE } from '../Constants'
 
@@ -118,4 +124,15 @@ describe('should get a random list from the query response', () => {
   expect(computed).toBeTruthy()
   expect(computed[Math.floor(Math.random() * computed.length)]).toEqual(jessie)
   expect(computed.length).toBe(CARD_STANDARD_DECK_SIZE)
+})
+
+describe('getUniqueRandomIndexes()', () => {
+  it('should generate a list of unique random index numbers', () => {
+    const list = [ana, michael, peter, robert, jessie, george, nick, elizabeth]
+    const numberOfPlayers = 6
+    const computedList = getUniqueRandomIndexes(numberOfPlayers, list.length)
+    const computedListOther = getUniqueRandomIndexes(0, list.length)
+    expect(computedList.length).toBe(6)
+    expect(computedListOther.length).toBe(0)
+  })
 })

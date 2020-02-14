@@ -128,6 +128,13 @@ interface IPropsCard {
   metadata: TDeckCard
 }
 
+interface IPickCardIndexed {
+  index: number,
+  translateXY: string,
+  rotate: number
+}
+
+
 export {
   IPlayerNames,
   IStateUserOptions,
@@ -154,5 +161,6 @@ export {
   TSelectOnChangeCallback,
   IPropsCard,
   TPlayerMode,
-  IQueryResponseData
+  IQueryResponseData,
+  IPickCardIndexed
 }

@@ -1,20 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { IStateUserOptions, TDeckCard } from '../../Types'
+import { IStateUserOptions, TDeckCard, IPickCardIndexed } from '../../Types'
 import { starWarsAPI } from '../../Queries'
 import GameCard from '../GameCard'
 import styled from 'styled-components'
 import { getPlayerModeListDataFromQueryResult,
-         getCardDeck } from '../../Helpers'
+         getCardDeck,
+         getUniqueRandomIndexes,
+         humanizeCardPlacementOnTableByFactor } from '../../Helpers'
 
 const CardDeckContainer = styled.div`
   position: relative;
 `
-
-interface IPickCardIndexed {
-  index: number,
-  translateXY: string
-}
 
 const CardPicker = ({ children, targetCardIndexes }: { children?: any, targetCardIndexes: IPickCardIndexed[] }) => {
   return (
@@ -23,12 +20,13 @@ const CardPicker = ({ children, targetCardIndexes }: { children?: any, targetCar
         React.Children.map(children || null, (child, index) => {
           const targetIndex = (targetCardIndexes &&
                               targetCardIndexes.findIndex(pickData => pickData.index === index))
-          const translateXY = targetCardIndexes &&
-                              targetCardIndexes[targetIndex]?.translateXY
+          const translateXY = targetCardIndexes[targetIndex]?.translateXY
+          const rotate = targetCardIndexes[targetIndex]?.rotate
           const propsData = {
             ...child.props,
             translateXY,
-            showFace: false
+            showFace: false,
+            rotate
           }
           if (targetIndex === -1) {
             return <child.type {...child.props} key={index} />
@@ -49,7 +47,7 @@ const CardPicker = ({ children, targetCardIndexes }: { children?: any, targetCar
 const GameBoard = (props: IStateUserOptions) => {
   const [cardDeck, setCardDeck] = useState<TDeckCard[] | undefined>(undefined)  
   const [targetCardIndexes, setTargetCardIndexes] = useState<IPickCardIndexed[]>([])
-  const { playerMode } = props
+  const { playerMode, numberOfPlayers } = props
   const { data: queryResponseData } = useQuery(starWarsAPI[playerMode])
 
   const positionCardOnDeck = (index: number, cardDeck: TDeckCard) => {
@@ -79,21 +77,19 @@ const GameBoard = (props: IStateUserOptions) => {
   }, [queryResponseData, playerMode, setCardDeck])
 
   const onClickHandler = React.useCallback(() => {
-    const posX: string = 20 + 'rem';
-    const posY: string = 20 + 'rem';
-    const translateXY = `${posX}, ${posY}`
-    const targetCardIndexes: IPickCardIndexed[] = [{
-      index: 12,
-      translateXY: "12rem, 18rem"
-    }, {
-      index: 10,
-      translateXY: "22rem, 18rem"
-    }, {
-      index: 36,
-      translateXY: "32rem, 18rem"
-    }]
+    const randomIndexes = cardDeck &&
+                          getUniqueRandomIndexes(numberOfPlayers, cardDeck.length)
+    const targetCardIndexes: IPickCardIndexed[] | undefined = randomIndexes &&
+                                                  randomIndexes.map((index, i) => {
+                                                    return ({
+                                                      index,
+                                                      translateXY: `${i * 12}rem, 20rem`,
+                                                      rotate: humanizeCardPlacementOnTableByFactor(index, 4.2)
+                                                    })
+                                                  })
+    targetCardIndexes &&
     setTargetCardIndexes(targetCardIndexes)
-  }, [setTargetCardIndexes])
+  }, [setTargetCardIndexes, numberOfPlayers, cardDeck])
 
   return (
     <CardDeckContainer>

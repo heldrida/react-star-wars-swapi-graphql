@@ -51,6 +51,22 @@ const convertCmToMeters = (value: string | number): number => {
   return +computedValue.toFixed(2)
 }
 
+const getUniqueRandomIndexes = (fullfil: number, length: number, acc: number[] = []): number[] => {
+  const randomNumber: number = Math.floor(Math.random() * length)
+  if ( acc.includes(randomNumber) || randomNumber === 0) {
+    return getUniqueRandomIndexes(fullfil, length, acc)
+  } else if (randomNumber !== 0 && fullfil > 0) {
+    fullfil -= 1
+    acc.push(randomNumber)
+    return getUniqueRandomIndexes(fullfil, length, acc)
+  }
+  return acc
+}
+
+const isOdd = (num: number) => (num % 2) !== 0
+
+const humanizeCardPlacementOnTableByFactor = (index: number, factor: number): number => (isOdd(index) ? 1 : -1)+(Math.random() * factor)
+
 export {
   configurationCsvToArr,
   playerNameFromListIndex,
@@ -58,5 +74,7 @@ export {
   getRandomStandardSizeCardDeckFromList,
   getPlayerModeListDataFromQueryResult,
   getCardDeck,
-  convertCmToMeters
+  convertCmToMeters,
+  getUniqueRandomIndexes,
+  humanizeCardPlacementOnTableByFactor
 }
