@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { IStateUserOptions,
          IDispatchUserOptions,
          IPropsGameProvider,
@@ -9,10 +9,6 @@ const GameDispatchContext = React.createContext<IDispatchUserOptions | undefined
 
 function GameProvider(props: IPropsGameProvider): TJSXElement {
   const [userOptions, setUserOptions] = React.useState<IStateUserOptions>()
-
-  useEffect(() => {
-    console.log('[debug] GameProvider: useEffect: userOptions: ', userOptions)
-  }, [userOptions, setUserOptions])
 
   return (
     <GameStateContext.Provider value={userOptions}>
