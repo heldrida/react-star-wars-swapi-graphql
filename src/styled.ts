@@ -22,6 +22,9 @@ const themeConf: TThemeConf = {
 }
 
 const DefaultStyles = createGlobalStyle`
+* {
+  text-decoration: none;
+}
   body {
     padding: 0;
     margin: 0;
@@ -32,6 +35,9 @@ const DefaultStyles = createGlobalStyle`
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+  p, li, div, a {
+    font-family: "Nunito", sans-serif;
   }
   *:focus {
     outline: none;
