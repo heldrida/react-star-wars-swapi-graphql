@@ -1,5 +1,5 @@
 import { CARD_STANDARD_DECK_SIZE, PLAYER_CARD_TYPE } from '../Constants'
-import { TDeckCard, TPlayerMode, IQueryResponseData } from '../Types'
+import { TDeckCard, TPlayerMode, IQueryResponseData, IStateUserOptions } from '../Types'
 
 const configurationCsvToArr = (csv: string): number[] => csv.split(',').map(v => +v)
 
@@ -67,6 +67,16 @@ const isOdd = (num: number) => (num % 2) !== 0
 
 const humanizeCardPlacementOnTableByFactor = (index: number, factor: number): number => (isOdd(index) ? 1 : -1) * (Math.random() * factor)
 
+const getPlayerNameFromUserOptions = (playerLabel: string, userOptions: IStateUserOptions): string => {
+  let computedName
+  if (userOptions.playerNames.hasOwnProperty(playerLabel)) {
+    computedName = `${userOptions.playerNames[playerLabel]}`
+  } else {
+    computedName = playerLabel
+  }
+  return computedName
+}
+
 export {
   configurationCsvToArr,
   playerNameFromListIndex,
@@ -76,5 +86,6 @@ export {
   getCardDeck,
   convertCmToMeters,
   getUniqueRandomIndexes,
-  humanizeCardPlacementOnTableByFactor
+  humanizeCardPlacementOnTableByFactor,
+  getPlayerNameFromUserOptions
 }

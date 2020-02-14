@@ -7,9 +7,9 @@ import styled from 'styled-components'
 import { getPlayerModeListDataFromQueryResult,
          getCardDeck,
          getUniqueRandomIndexes,
-         humanizeCardPlacementOnTableByFactor } from '../../Helpers'
+         humanizeCardPlacementOnTableByFactor,
+         getPlayerNameFromUserOptions } from '../../Helpers'
 import CtaButton from '../CtaButton'
-import { IPropsTheme } from '../../Types'
 
 const CardDeckContainer = styled.div`
   position: relative;
@@ -36,11 +36,13 @@ const CardPicker = ({ children, targetCardIndexes }: { children?: any, targetCar
           const translateXY = targetCardIndexes[targetIndex]?.translateXY
           const rotate = targetCardIndexes[targetIndex]?.rotate
           const showFace = targetCardIndexes[targetIndex]?.showFace
+          const playerName = targetCardIndexes[targetIndex]?.playerName
           const propsData = {
             ...child.props,
             translateXY,
             showFace,
-            rotate
+            rotate,
+            playerName
           }
           if (targetIndex === -1) {
             return <child.type {...child.props} key={index} />
@@ -100,7 +102,8 @@ const GameBoard = (props: IStateUserOptions) => {
                                                       index,
                                                       translateXY: `${i * 12}rem, 18rem`,
                                                       rotate: humanizeCardPlacementOnTableByFactor(index, 4.2),
-                                                      showFace: true
+                                                      showFace: true,
+                                                      playerName: getPlayerNameFromUserOptions(`Player${i + 1}`, props)
                                                     })
                                                   })
     computedTargetCardIndexes &&
@@ -110,7 +113,7 @@ const GameBoard = (props: IStateUserOptions) => {
       setTurnPickedCards(false)
       clearTimeout(t)
     }, 1200)
-  }, [setTargetCardIndexes, numberOfPlayers, cardDeck])
+  }, [setTargetCardIndexes, numberOfPlayers, cardDeck, props])
 
   useEffect(() => {
     const computedTargetCardIndexes: IPickCardIndexed[] | undefined = targetCardIndexes.map(data => {

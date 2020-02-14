@@ -120,15 +120,24 @@ const StarShipMetadata = ({name, length, model}: IStarships) => (
   </>
 )
 
+const PlayerNameBadge = styled.div`
+  position: absolute;
+  bottom: -2rem;
+  left: 0;
+  font-family: "Nunito", sans-serif;
+  color: rgba(0,0,0,0.3);
+  font-size: .8rem;
+`
+
 const GameCard = (props: IPropsCard) => {
-  const { translateXY, rotate, showFace, zIndex, visibilityDelay, metadata } = props  
+  const { translateXY, rotate, showFace, zIndex, visibilityDelay, metadata, playerName = { playerName: '' } } = props  
   const [visible, setVisible] = useState(false)
   let t = setTimeout(() => {
     setVisible(true)
     clearTimeout(t)
   }, visibilityDelay)
   return (
-    <Scene translateXY={translateXY} rotate={rotate} zIndex={zIndex}>
+    <Scene translateXY={translateXY} rotate={rotate} zIndex={zIndex} playerName={playerName}>
       <SceneCard showFace={showFace} visible={visible}>
         <SceneCardFront>
           <List>
@@ -145,6 +154,10 @@ const GameCard = (props: IPropsCard) => {
         </SceneCardFront>
         <SceneCardBack />
       </SceneCard>
+      {
+        typeof playerName === 'string' &&
+        <PlayerNameBadge>{playerName}</PlayerNameBadge>
+      }
   </Scene>
   )
 }

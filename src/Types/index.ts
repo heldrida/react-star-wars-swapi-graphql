@@ -125,14 +125,16 @@ interface IPropsCard {
   translateXY: string, // example csv: "80px, 30px"
   showFace: boolean,
   visibilityDelay: number,
-  metadata: TDeckCard
+  metadata: TDeckCard,
+  playerName?: string
 }
 
 interface IPickCardIndexed {
   index: number,
   translateXY: string,
   rotate: number,
-  showFace: boolean
+  showFace: boolean,
+  playerName: string
 }
 
 
