@@ -65,7 +65,7 @@ const getUniqueRandomIndexes = (fullfil: number, length: number, acc: number[] =
 
 const isOdd = (num: number) => (num % 2) !== 0
 
-const humanizeCardPlacementOnTableByFactor = (index: number, factor: number): number => (isOdd(index) ? 1 : -1)+(Math.random() * factor)
+const humanizeCardPlacementOnTableByFactor = (index: number, factor: number): number => (isOdd(index) ? 1 : -1) * (Math.random() * factor)
 
 export {
   configurationCsvToArr,
