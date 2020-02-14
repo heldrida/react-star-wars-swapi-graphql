@@ -1,10 +1,10 @@
 import React from 'react'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-import { NavigationBar } from './Components'
-import { Home, Results } from './Containers'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Results } from './Containers'
 import { ThemeProvider } from "styled-components";
-import { BoxWrapper } from './Components'
 import { themeConf, DefaultStyles } from './styled'
+import { NavigationBar, BoxWrapper, Game } from './Components'
+import { GameProvider } from './Context'
 
 const App = () => {
   return (
@@ -13,9 +13,11 @@ const App = () => {
       <Router>
         <NavigationBar />
         <Switch>
-          <Route exact path="/">
+          <Route exact path="/game">
             <BoxWrapper>
-              <Home />
+              <GameProvider>
+                <Game />
+              </GameProvider>
             </BoxWrapper>
           </Route>
           <Route exact path="/results">

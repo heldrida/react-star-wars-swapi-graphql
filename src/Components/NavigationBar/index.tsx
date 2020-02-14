@@ -14,10 +14,10 @@ const NavigationBar = () => (
       <BoxWrapper>
         <NavigationList>
           <NavigationItem>
-            <Logo />
+            <Link to="/"><Logo /></Link>
           </NavigationItem>
           <NavigationItem>
-            <Link to="/">Home</Link>
+            <Link to="/game">Game</Link>
           </NavigationItem>
           <NavigationItem>
             <Link to="/results">Results</Link>
