@@ -77,6 +77,13 @@ const getPlayerNameFromUserOptions = (playerLabel: string, userOptions: IStateUs
   return computedName
 }
 
+const padLeft = (dateData: number): string => String(dateData).padStart(2, '0')
+const currentTimeFormatted = () => {
+  const date = new Date()
+  const formatted = `${padLeft(date.getDate())}-${padLeft(date.getMonth() + 1)}-${padLeft(date.getFullYear())},${padLeft(date.getHours())}h${padLeft(date.getMinutes())}m${padLeft(date.getSeconds())}s`
+  return formatted
+}
+
 export {
   configurationCsvToArr,
   playerNameFromListIndex,
@@ -87,5 +94,6 @@ export {
   convertCmToMeters,
   getUniqueRandomIndexes,
   humanizeCardPlacementOnTableByFactor,
-  getPlayerNameFromUserOptions
+  getPlayerNameFromUserOptions,
+  currentTimeFormatted
 }

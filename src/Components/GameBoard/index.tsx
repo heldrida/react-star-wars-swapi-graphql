@@ -8,8 +8,10 @@ import { getPlayerModeListDataFromQueryResult,
          getCardDeck,
          getUniqueRandomIndexes,
          humanizeCardPlacementOnTableByFactor,
-         getPlayerNameFromUserOptions } from '../../Helpers'
+         getPlayerNameFromUserOptions,
+         currentTimeFormatted } from '../../Helpers'
 import CtaButton from '../CtaButton'
+import config from '../../config'
 
 const CardDeckContainer = styled.div`
   position: relative;
@@ -60,10 +62,25 @@ const CardPicker = ({ children, targetCardIndexes }: { children?: any, targetCar
   )
 }
 
+const resultsPropertyName = `${config.application.name}_result_history`
+const useLocalStorage = (key: string, initialValue: [] = []) => {
+  const [value, setValue] = useState(() => {
+    const item = window.localStorage.getItem(key)
+    return item ? JSON.parse(item) : initialValue
+  })
+
+  useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(value))
+  }, [key, value]) 
+
+  return [value, setValue]
+}
+
 const GameBoard = (props: IStateUserOptions) => {
   const [cardDeck, setCardDeck] = useState<TDeckCard[] | undefined>(undefined)  
   const [targetCardIndexes, setTargetCardIndexes] = useState<IPickCardIndexed[]>([])
   const [turnPickedCards, setTurnPickedCards] = useState<boolean>(true)
+  const [result, setResult] = useLocalStorage(resultsPropertyName)
   const { playerMode, numberOfPlayers } = props
   const { data: queryResponseData } = useQuery(starWarsAPI[playerMode])
 
@@ -136,6 +153,19 @@ const GameBoard = (props: IStateUserOptions) => {
   // eslint-disable-next-line
   }, [turnPickedCards])
 
+  const gameResultHandler = useCallback((targetCard: TPropFindWinner) => {
+    const prevData = (window.localStorage[resultsPropertyName] && JSON.parse(window.localStorage[resultsPropertyName])) || []
+    const timeFormatted = currentTimeFormatted()
+    const [date, time] = timeFormatted.split(',')
+    const nextData = Object.assign({}, {
+      playerName: targetCard?.playerName,
+      date,
+      time
+    })
+    const computedResult = [...prevData, nextData]
+    setResult(computedResult)
+  }, [setResult])
+
   const findWinner = useCallback((targetCardIndexes: TPropFindWinner[]) => {
     const winnerPlayerData = targetCardIndexes.reduce((prev, curr): TPropFindWinner => {
       let result
@@ -149,8 +179,9 @@ const GameBoard = (props: IStateUserOptions) => {
       return result
     })
     console.log('[debug] winnerPlayerData: ', winnerPlayerData)
-    // gameResultHandler(winnerPlayerData)
-  }, [])
+    winnerPlayerData &&
+    gameResultHandler(winnerPlayerData)
+  }, [gameResultHandler])
 
   return (
     <>
