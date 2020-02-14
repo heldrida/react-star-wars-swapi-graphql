@@ -6,12 +6,9 @@ import {
 } from '../../Types'
 import { ACTIONS, PLAYER_CARD_TYPE } from '../../Constants' 
 import { useUserOptionsSetter } from '../../Context'
-import { LightSaber, BarShort, StarIcon as Star, AngelFire } from '../../Icons'
 import CtaButton from '../CtaButton'
 import {
-  ItemBlock,
-  LightSaberContainer,
-  AngelFireContainer, 
+  ItemBlock, 
   CtaButtonContainer,
   Box,
   TitleBox
