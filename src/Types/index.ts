@@ -134,9 +134,11 @@ interface IPickCardIndexed {
   translateXY: string,
   rotate: number,
   showFace: boolean,
-  playerName: string
+  playerName: string,
+  card: TDeckCard
 }
 
+type TPropFindWinner = IPickCardIndexed | undefined
 
 export {
   IPlayerNames,
@@ -165,5 +167,6 @@ export {
   IPropsCard,
   TPlayerMode,
   IQueryResponseData,
-  IPickCardIndexed
+  IPickCardIndexed,
+  TPropFindWinner
 }

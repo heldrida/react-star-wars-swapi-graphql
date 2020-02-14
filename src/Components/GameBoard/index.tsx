@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { IStateUserOptions, TDeckCard, IPickCardIndexed } from '../../Types'
+import { IStateUserOptions, TDeckCard, IPickCardIndexed, TPropFindWinner } from '../../Types'
 import { starWarsAPI } from '../../Queries'
 import GameCard from '../GameCard'
 import styled from 'styled-components'
@@ -92,10 +92,12 @@ const GameBoard = (props: IStateUserOptions) => {
     cardDeck && setCardDeck(cardDeck)
   }, [queryResponseData, playerMode, setCardDeck])
 
-  const onClickHandler = React.useCallback(() => {
+  const onClickHandler = useCallback(() => {
     setTurnPickedCards(true)
     const randomIndexes = cardDeck &&
                           getUniqueRandomIndexes(numberOfPlayers, cardDeck.length)
+    console.log('[debug] randomIndexes: ', randomIndexes)
+    console.log('[debug] cardDeck: ', cardDeck)
     const computedTargetCardIndexes: IPickCardIndexed[] | undefined = randomIndexes &&
                                                   randomIndexes.map((index, i) => {
                                                     return ({
@@ -103,9 +105,11 @@ const GameBoard = (props: IStateUserOptions) => {
                                                       translateXY: `${i * 12}rem, 18rem`,
                                                       rotate: humanizeCardPlacementOnTableByFactor(index, 4.2),
                                                       showFace: true,
-                                                      playerName: getPlayerNameFromUserOptions(`Player${i + 1}`, props)
+                                                      playerName: getPlayerNameFromUserOptions(`Player${i + 1}`, props),
+                                                      card: cardDeck![index]
                                                     })
                                                   })
+    console.log('[debug] computedTargetCardIndexes: ', computedTargetCardIndexes)
     computedTargetCardIndexes &&
     setTargetCardIndexes(computedTargetCardIndexes)
 
@@ -124,9 +128,29 @@ const GameBoard = (props: IStateUserOptions) => {
                                                   })
     computedTargetCardIndexes &&
     setTargetCardIndexes(computedTargetCardIndexes)
+
+    targetCardIndexes &&
+    cardDeck &&
+    findWinner(targetCardIndexes)
   // Obs: we just want to watch turnPickedCards, ignore `targetCardIndexes`
   // eslint-disable-next-line
   }, [turnPickedCards])
+
+  const findWinner = useCallback((targetCardIndexes: TPropFindWinner[]) => {
+    const winnerPlayerData = targetCardIndexes.reduce((prev, curr): TPropFindWinner => {
+      let result
+      if (prev && curr) {
+        if ('height' in prev.card && 'height' in curr.card) {
+          result = prev.card.height > curr.card.height ? prev : curr
+        } else if ('length' in prev.card && 'length' in curr.card) {
+          result = prev.card.length > curr.card.length ? prev : curr
+        }
+      }
+      return result
+    })
+    console.log('[debug] winnerPlayerData: ', winnerPlayerData)
+    // gameResultHandler(winnerPlayerData)
+  }, [])
 
   return (
     <>
