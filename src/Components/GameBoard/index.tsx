@@ -124,6 +124,8 @@ const GameBoard = (props: IStateUserOptions) => {
                                                   })
     computedTargetCardIndexes &&
     setTargetCardIndexes(computedTargetCardIndexes)
+  // Obs: we just want to watch turnPickedCards, ignore `targetCardIndexes`
+  // eslint-disable-next-line
   }, [turnPickedCards])
 
   return (

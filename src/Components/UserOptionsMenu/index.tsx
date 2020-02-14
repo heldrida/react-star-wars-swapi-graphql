@@ -13,7 +13,7 @@ import {
   IPropsTheme } from '../../Types'
   import { PLAYER_CARD_TYPE } from '../../Constants' 
 import styled, { css, keyframes } from "styled-components"
-import { boxShadowStyle, fontLabelStyle, fontTitlesStyle, lightTextShadow } from '../../sharedStyles'
+import { boxShadowStyle, fontLabelStyle } from '../../sharedStyles'
 import { useUserOptionsSetter } from '../../Context'
 import { LightSaber, BarShort, StarIcon as Star, AngelFire } from '../../Icons'
 import CtaButton from '../CtaButton'
