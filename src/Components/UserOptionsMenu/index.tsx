@@ -4,7 +4,7 @@ import {
   TSelectOnChangeCallback,
   TInputOnChangeCallback
 } from '../../Types'
-import { ACTIONS, PLAYER_CARD_TYPE } from '../../Constants' 
+import { ACTIONS } from '../../Constants' 
 import { useUserOptionsSetter } from '../../Context'
 import CtaButton from '../CtaButton'
 import {

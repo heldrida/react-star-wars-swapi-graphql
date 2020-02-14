@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { TPropFlag } from '../../Types'
 
 const CtaButton = styled.button<TPropFlag>`
-  background: ${(props: TPropFlag) => props.bg || '#28adfd'};
+  background: ${(props: TPropFlag) => props.bg || props.theme.cta};
   line-height: 4rem;
   font-size: 1rem;
   color: #fff;

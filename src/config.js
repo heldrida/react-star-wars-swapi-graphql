@@ -9,9 +9,11 @@ const themeColors = {
     lightCyan: "#DDFDFE",
     lightBlue: "#6551FF",
     darkGrey: "#222",
-    lightGrey: "#fff",
+    lightGrey: "#aaa",
     lightest: '#fff',
-    darkBlue: "#343195"
+    darkBlue: "#343195",
+    warning: "#fd6d6d",
+    cta: "#28adfd"
   },
   alternative: {
     schaussPink: "#FF96BB",
@@ -24,7 +26,9 @@ const themeColors = {
     darkGrey: "#333",
     lightGrey: "#ddd",
     lightest: '#fff',
-    darkBlue: "#343195"
+    darkBlue: "#343195",
+    warning: "#fd6d6d",
+    cta: "#28adfd"
   }
 }
 

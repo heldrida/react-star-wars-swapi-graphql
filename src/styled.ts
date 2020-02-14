@@ -13,10 +13,12 @@ const themeConf: TThemeConf = {
   color6: appConfig.themeColors.default.lightBlue,
   color7: appConfig.themeColors.default.darkGrey,
   textDark: appConfig.themeColors.default.darkGrey,
-  textLight: appConfig.themeColors.default.lightGrey,
+  textLight: appConfig.themeColors.default.lightest,
   skyColor: appConfig.themeColors.default.darkBlue,
   foregroundColor: appConfig.themeColors.default.lightBlue,
-  backgroundColor: appConfig.themeColors.default.lightest
+  backgroundColor: appConfig.themeColors.default.lightest,
+  cta: appConfig.themeColors.default.cta,
+  lightGreyBorder: appConfig.themeColors.default.lightGrey
 }
 
 const DefaultStyles = createGlobalStyle`

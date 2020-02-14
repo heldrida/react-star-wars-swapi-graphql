@@ -8,6 +8,7 @@ import {
   WinnerContainer,
   NoResultsYet
 } from './styled'
+import AppConfiguration from '../../config'
 
 const Results = () => {
   const resultsPropertyName = getResultsPropertyName()
@@ -25,7 +26,7 @@ const Results = () => {
     resultsData.length > 0 &&
     (
       <div>
-        <CtaButton bg={'#fd6d6d'} onClick={clearResultHistory}>Clear results history</CtaButton>
+        <CtaButton bg={AppConfiguration.themeColors.default.warning} onClick={clearResultHistory}>Clear results history</CtaButton>
         <TextFadeInfinityContainer>
           <Stripe>
             <div>

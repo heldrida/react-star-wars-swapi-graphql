@@ -13,7 +13,7 @@ const SelectBox = styled.select`
   width: 16rem;
   box-sizing: border-box;
   margin: 0;
-  border: 1px solid #aaa;
+  border: 1px solid ${(props) => props.theme.lightGreyBorder};
   box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
   border-radius: .5em;
   appearance: none;
