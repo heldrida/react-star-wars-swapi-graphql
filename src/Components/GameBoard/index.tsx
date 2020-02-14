@@ -13,6 +13,7 @@ import { getPlayerModeListDataFromQueryResult,
 import CtaButton from '../CtaButton'
 import config from '../../config'
 import { Chewbacca } from '../../Icons'
+import posed, { PoseGroup } from 'react-pose'
 
 const CardDeckContainer = styled.div`
   position: relative;
@@ -67,6 +68,22 @@ const SpeechBubble = styled.div`
     border-color: #00cc99 #00cc99 transparent transparent;
   }
 `
+
+const AnimationContainer = posed.div({
+  enter: {
+    transition: {
+      y: { duration: 400, ease: 'easeInOut' }
+    },
+    y: 0,
+    opacity: 1,
+    delay: 320,
+  },
+  exit: {
+    transition: { duration: 160 },
+    opacity: 0.2,
+    y: 40,
+  }
+})
 
 const CardPicker = ({ children, targetCardIndexes }: { children?: any, targetCardIndexes: IPickCardIndexed[] }) => {
   return (
@@ -125,8 +142,13 @@ const GameBoard = (props: IStateUserOptions) => {
   const [winner, setWinner] = useState<IPickCardIndexed | undefined>(undefined)
   const { playerMode, numberOfPlayers } = props
   const { data: queryResponseData } = useQuery(starWarsAPI[playerMode])
+  const [isCtaVisible, setIsCtaVisible] = useState(false)
 
-  const positionCardOnDeck = (index: number, cardDeck: TDeckCard) => {
+  setTimeout(() => {
+    setIsCtaVisible(true)
+  }, 2000)
+
+  const positionCardOnDeck = (index: number, cardDeck: TDeckCard, total: number) => {
     const posX: string = (index + 2) + 'px';
     const posY: string = (index + 2) + 'px';
     let translateXY = `${posX}, ${posY}`
@@ -152,11 +174,9 @@ const GameBoard = (props: IStateUserOptions) => {
   }, [queryResponseData, playerMode, setCardDeck])
 
   const onClickHandler = useCallback(() => {
-    setTurnPickedCards(true)
+    setIsCtaVisible(false)
     const randomIndexes = cardDeck &&
                           getUniqueRandomIndexes(numberOfPlayers, cardDeck.length)
-    console.log('[debug] randomIndexes: ', randomIndexes)
-    console.log('[debug] cardDeck: ', cardDeck)
     const computedTargetCardIndexes: IPickCardIndexed[] | undefined = randomIndexes &&
                                                   randomIndexes.map((index, i) => {
                                                     return ({
@@ -168,7 +188,7 @@ const GameBoard = (props: IStateUserOptions) => {
                                                       card: cardDeck![index]
                                                     })
                                                   })
-    console.log('[debug] computedTargetCardIndexes: ', computedTargetCardIndexes)
+
     computedTargetCardIndexes &&
     setTargetCardIndexes(computedTargetCardIndexes)
 
@@ -179,6 +199,7 @@ const GameBoard = (props: IStateUserOptions) => {
   }, [setTargetCardIndexes, numberOfPlayers, cardDeck, props])
 
   useEffect(() => {
+    if (targetCardIndexes.length === 0) return
     const computedTargetCardIndexes: IPickCardIndexed[] | undefined = targetCardIndexes.map(data => {
                                                     return ({
                                                       ...data,
@@ -189,6 +210,7 @@ const GameBoard = (props: IStateUserOptions) => {
     setTargetCardIndexes(computedTargetCardIndexes)
 
     targetCardIndexes &&
+    targetCardIndexes.length > 0 &&
     cardDeck &&
     findWinner(targetCardIndexes)
   // Obs: we just want to watch turnPickedCards, ignore `targetCardIndexes`
@@ -228,11 +250,17 @@ const GameBoard = (props: IStateUserOptions) => {
   }, [gameResultHandler])
 
   useEffect(() => {
+    if (!winner) return
     setAnnounceWinner(winner?.playerName)
     setTimeout(() => {
+      // reset
       setAnnounceWinner(undefined)
-    }, 5000)
-  }, [winner])
+      setWinner(undefined)
+      setTargetCardIndexes([])
+      setTurnPickedCards(true)
+      setIsCtaVisible(true)
+    }, 3000)
+  }, [winner, cardDeck])
 
   return (
     <>
@@ -240,23 +268,36 @@ const GameBoard = (props: IStateUserOptions) => {
         <CardPicker targetCardIndexes={targetCardIndexes}>
           {
             cardDeck &&
-            cardDeck.map((value, index) => positionCardOnDeck(index, value))
+            cardDeck.map((value, index) => positionCardOnDeck(index, value, cardDeck.length))
           }
         </CardPicker>
       </CardDeckContainer>
+      <PoseGroup>
       {
-        (announceWinner &&
-        <ChewbaccaContainer>
-          <SpeechBubble>
-            <span>Wuarm! {announceWinner} is the winner!</span>
-          </SpeechBubble>
-          <Chewbacca />
-        </ChewbaccaContainer>) ||
-        <CtaContainer>
-          <p>When ready to play, press the button!</p>
-          <CtaButton onClick={onClickHandler}>Go!</CtaButton>
-      </CtaContainer>
+        (
+          announceWinner &&
+          winner &&
+          <AnimationContainer key="GoCtaButton">
+            <ChewbaccaContainer>
+              <SpeechBubble>
+                <span>Waaargh! {announceWinner} is the winner!</span>
+              </SpeechBubble>
+              <Chewbacca />
+            </ChewbaccaContainer>
+          </AnimationContainer>
+        ) ||
+        (
+          isCtaVisible && (
+            <AnimationContainer key="GoCtaButton">
+              <CtaContainer>
+                <p>When ready to play, press the button!</p>
+                <CtaButton onClick={onClickHandler}>Go!</CtaButton>
+              </CtaContainer>
+            </AnimationContainer>
+          )
+        )
       }
+      </PoseGroup>
     </>
   )
 }
