@@ -57,6 +57,10 @@ To Build:
 
 ### `yarn build`
 
+To serve the Production/Built version:
+
+## `npx serve -s build`
+
 For development:
 
 ## yarn watch
